@@ -112,7 +112,7 @@ trait TelegramTrait {
             try {
                 $r = RawAppartmentsData::updateOrCreate($rawMsgData, $updateMsgData);
                 Log::info('Сообщение '. $message['id'] .' записали в БД. Фото: '. $imageName);
-                dump('Сообщение '. $message['id'] .' записали в БД. Данные: '. json_encode($updateMsgData));
+//                dump('Сообщение '. $message['id'] .' записали в БД. Данные: '. json_encode($updateMsgData));
             } catch (Exception $exception) {
                 Log::error($exception->getMessage());;
             }
@@ -240,7 +240,7 @@ trait TelegramTrait {
 
             $r = ApartmentsData::updateOrCreate($rawMsgData, $apartData);
             Log::info('Сообщение '. $apartmentRaw->msg_id .' обработано.');
-            dump('Сообщение '. $apartmentRaw->msg_id .' обработано. Данные: '. json_encode($apartData));
+//            dump('Сообщение '. $apartmentRaw->msg_id .' обработано. Данные: '. json_encode($apartData));
         }
 
         return true;

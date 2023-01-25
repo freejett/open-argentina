@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Telegram;
 
 use App\Http\Controllers\Backend\Parsers\Telegram\TelegramController;
 use App\Traits\TelegramTrait;
 use Illuminate\Console\Command;
 
-class TelegramApartsParse extends Command
+class UpdateChatSettings extends Command
 {
     use TelegramTrait;
 
     /**
      * The name and signature of the console command.
-     * Получаем сообщения из чата
+     *
      * @var string
      */
-    protected $signature = 'telegram:get_raw_msgs';
+    protected $signature = 'telegram:update_chat_settings';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Получаем сообщения из телеграм чата';
+    protected $description = 'Обновить настройки чата и получить ID последнего сообщения';
 
     /**
      * Execute the console command.
@@ -31,10 +31,9 @@ class TelegramApartsParse extends Command
      */
     public function handle()
     {
-//        $this->telegramInit(TelegramController::CHAT_ID);
-//        $this->getChatMessages();
-//        $this->updateChatSettings();
-//        $this->parseRawData();
+        $this->telegramInit(TelegramController::CHAT_ID);
+        $this->updateChatSettings();
+
         return Command::SUCCESS;
     }
 }
