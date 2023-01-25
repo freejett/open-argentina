@@ -7,10 +7,6 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    protected $commands = [
-        'App\Console\Commands\TelegramApartsParse'
-    ];
-
     /**
      * Define the application's command schedule.
      *
@@ -19,8 +15,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-//         $schedule->command('telegram:get_raw_msgs')->everyMinute();
-//         $schedule->command('geocoder_here:search_coords')->everyMinute();
+//         $schedule->command('telegram:update_chat_settings')->daily();
+//         $schedule->command('telegram:get_chat_messages')->everyThreeHours();
+//         $schedule->command('telegram:parse')->everyThreeHours();
+//         $schedule->command('geocoder_here:search_coords')->dailyAt('01:00');
     }
 
     /**
