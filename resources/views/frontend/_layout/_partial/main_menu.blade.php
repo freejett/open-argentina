@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/">
-                <img src="/assets/estate/assets/img/logo.png" alt="">
+                <img src="/assets/estate/assets/img/logo_oa.png" alt="">
             </a>
         </div>
 

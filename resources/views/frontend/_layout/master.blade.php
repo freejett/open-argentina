@@ -87,7 +87,7 @@
                         <h4>О нас</h4>
                         <div class="footer-title-line"></div>
 
-                        <img src="/assets/estate/assets/img/logo.png" alt="" class="wow pulse" data-wow-delay="1s">
+                        <img src="/assets/estate/assets/img/logo_oa.png" alt="" class="wow pulse" data-wow-delay="1s">
                         <p>Проект, собирающий общедоступную информацию о жизни в Аргентине и помогающий людям адаптироваться в новой стране</p>
 {{--                        <ul class="footer-adress">--}}
 {{--                            <li><i class="pe-7s-map-marker strong"> </i> 9089 your adress her</li>--}}
