@@ -36,6 +36,26 @@ trait HereGeocoder {
         }
 
         foreach ($aparts as $apart) {
+            if (!$apart->address) {
+                $apartCoords = [
+                    'lat' => 2,
+                    'lng' => 2,
+                ];
+                $apart->fill($apartCoords)->save();
+                Log::alert('Не указан адрес для '. $apart->chat_id .' '. $apart->msg_id);
+                continue;
+            }
+
+            if (strlen($apart->address) < 5) {
+                $apartCoords = [
+                    'lat' => 3,
+                    'lng' => 3,
+                ];
+                $apart->fill($apartCoords)->save();
+                Log::alert('Неправильный адрес для '. $apart->chat_id .' '. $apart->msg_id);
+                continue;
+            }
+
             $address = 'buenos aires '. $apart->address;
             $result = $geocoder->geocodeQuery(GeocodeQuery::create($address));
 
