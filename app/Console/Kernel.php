@@ -19,6 +19,12 @@ class Kernel extends ConsoleKernel
 //         $schedule->command('telegram:get_chat_messages')->everyThreeHours();
 //         $schedule->command('telegram:parse')->everyThreeHours();
 //         $schedule->command('geocoder_here:search_coords')->dailyAt('01:00');
+
+        /*
+         * tests
+         */
+//        $schedule->command('telegram:get_chat_messages')->everyMinute();
+        $schedule->command('geocoder_here:search_coords')->everyMinute();
     }
 
     /**
