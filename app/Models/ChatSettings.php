@@ -19,7 +19,7 @@ class ChatSettings extends Model
 {
     use HasFactory;
 
-    protected $attributes = ['id', 'chat_id', 'current_msg_id', 'per_page', 'last_chat_msg_id', 'chat_info'];
+//    protected $attributes = ['id', 'chat_id', 'current_msg_id', 'per_page', 'last_chat_msg_id', 'chat_info'];
 
     protected $fillable = ['chat_id', 'current_msg_id', 'per_page', 'last_chat_msg_id', 'chat_info'];
 }
