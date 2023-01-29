@@ -16,7 +16,7 @@ class Functions
 
     /**
      * Очищает строку с указанием адреса от посторонних данных
-     * и конвертирует все умлуты в английские аналоги
+     * и конвертирует все умляуты в английские аналоги
      * @param $str
      * @return array|string|string[]|null
      */
@@ -32,5 +32,24 @@ class Functions
      */
     public static function cleanDigitsStr ($str) {
         return preg_replace('/[^0-9]/ui', '', $str );
+    }
+
+    /**
+     * Оставляет в строке только цифры англ буквы
+     * @param $str
+     * @return array|string|string[]|null
+     */
+    public static function cleanDigitsEndStr ($str) {
+        return trim(preg_replace("/[^A-Za-z0-9\/\s]/", "", $str));
+    }
+
+    /**
+     * Заменить умляуты на английские аналоги
+     * @param $str
+     * @return string
+     */
+    public static function clearUmlauts($str)
+    {
+        return preg_replace('~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml|caron);~i', '$1', htmlentities($str, ENT_COMPAT, 'UTF-8'));
     }
 }
