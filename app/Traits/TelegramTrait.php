@@ -2,8 +2,6 @@
 
 namespace App\Traits;
 
-use App\Helpers\Functions;
-use App\Models\ApartmentsData;
 use App\Models\ChatSettings;
 use App\Models\RawAppartmentsData;
 use danog\MadelineProto\API;
@@ -31,26 +29,48 @@ trait TelegramTrait {
     public int $chatId;
 
     /**
+     * Название чата телеграм
+     * @var string
+     */
+    public string $chatName;
+
+    /**
      * Путь до изображений квартир
      * @var string
      */
     public string $basePhotoPath = 'app/public/aparts/';
 
     /**
+     * Настройки чата
      * @var object
      */
     protected object $chatSettings;
 
     /**
+     * Парсеры квартир
+     * @var array|string[]
+     */
+    protected array $parsers = [
+        'ArgentinaHouse' => \App\Parsers\Aparts\Telegram\ArgentinaHouse::class,
+        'buenas_hatas' => \App\Parsers\Aparts\Telegram\BuenasHatas::class,
+    ];
+
+    protected $parser;
+
+    /**
      * Инициализация объекта для работы с API Telegram
      * @return void
      */
-    public function telegramInit($chatId): void
+    public function telegramInit($chatId = null): void
     {
         $this->MadelineProto = new API('index.madeline');
         $me = $this->MadelineProto->start();
 //        $me = $this->MadelineProto->getSelf();
-        $this->chatId = $chatId;
+
+        // для работы с конкретным чатом
+        if ($chatId) {
+            $this->chatId = $chatId;
+        }
     }
 
     /**
@@ -69,22 +89,23 @@ trait TelegramTrait {
         }
 
         $messages_Messages = $this->MadelineProto->channels->getMessages(channel: $this->chatId, id: $msgIds);
+//        echo '<pre>'; print_r($messages_Messages); exit();
 
         foreach ($messages_Messages['messages'] as $k => $message) {
             // если не сообщение или текст сообщения пустой
             //  || !$message['message']
-            if ($message['_'] != 'message') {
+            if ($message['_'] != 'message' || $message['message'] == '') {
                 // значит квартира перенесена в архив
-                $rawApartData = RawAppartmentsData::where('chat_id', $this->chatId)
-                    ->where('msg_id', $message['id'])
-                    ->first();
-
-                // устанавливаем метку, что сообщение - не квартира
-                // тогда эта квартина не будет выпадать в результатах поиска
-                if ($rawApartData) {
-                    $rawApartData->fill(['is_appartment', 0])
-                        ->save();
-                }
+//                $rawApartData = RawAppartmentsData::where('chat_id', $this->chatId)
+//                    ->where('msg_id', $message['id'])
+//                    ->first();
+//
+//                // устанавливаем метку, что сообщение - не квартира
+//                // тогда эта квартина не будет выпадать в результатах поиска
+//                if ($rawApartData) {
+//                    $rawApartData->fill(['is_appartment', 0])
+//                        ->save();
+//                }
 
                 continue;
             }
@@ -112,12 +133,11 @@ trait TelegramTrait {
             try {
                 $r = RawAppartmentsData::updateOrCreate($rawMsgData, $updateMsgData);
                 Log::info('Сообщение '. $message['id'] .' записали в БД. Фото: '. $imageName);
-//                dump('Сообщение '. $message['id'] .' записали в БД. Данные: '. json_encode($updateMsgData));
+                dump('Сообщение '. $message['id'] .' записали в БД. Данные: '. json_encode($updateMsgData));
             } catch (Exception $exception) {
                 Log::error($exception->getMessage());;
             }
         }
-
         $this->setNewCurrentMsgId();
 
         return true;
@@ -170,78 +190,11 @@ trait TelegramTrait {
      */
     public function parseRawData(): bool
     {
-        // определяем, какие из сообщений - объявления о квартире
-        RawAppartmentsData::select('chat_id', 'msg_id', 'is_appartment')
-            ->where('msg', 'like', 'Лот #%')
-            ->update(['is_appartment' => 1]);
+        // определяем класс-обработчик для парсинга данных
+        $this->getParser();
 
-        $rawAparts = RawAppartmentsData::where('chat_id', $this->chatId)
-            ->where('is_appartment', 1)
-            ->get();
-
-        foreach ($rawAparts as $apartmentRaw) {
-            // разбиваем на строки
-            $apartmentArr = explode(PHP_EOL, $apartmentRaw->msg);
-            $address = '';
-            $fullAddress = '';
-            $cost = '';
-            $fullPrice = '';
-            $title = $apartmentArr[0];
-
-            foreach ($apartmentArr as $apartmentLine) {
-                $apartmentLine = strtolower($apartmentLine);
-
-                // ищем адрес
-                if (strpos($apartmentLine, 'айон:')) {
-                    $fullAddress = $apartmentLine;
-                    $apartmentLineAddr = preg_split('/[,|(|)]/', $apartmentLine);
-                    $address = trim(Functions::cleanAddressStr($apartmentLineAddr[0]));
-                }
-
-                // ищем стоимость
-                if (strpos($apartmentLine, 'словия:')) {
-                    $fullPrice = $apartmentLine;
-                    $rawCost = explode('$', $apartmentLine);
-
-                    if (count($rawCost) > 1) {
-//                        $cost = (int) trim($this->cleanDigitsStr($rawCost[0]));
-                        $cost = (int) trim( Functions::cleanDigitsStr($rawCost[0]) );
-
-                        if (!$cost) {
-                            $costPrepare1 = substr($rawCost[1], 0, 7);
-                            if ($costPrepare1) {
-                                $costPrepare2 = Functions::cleanDigitsStr($costPrepare1);
-                                if ($costPrepare2) {
-                                    $cost = (int) trim($costPrepare2);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            $rawMsgData = [
-                'chat_id' => $this->chatId,
-                'msg_id' => $apartmentRaw->msg_id,
-            ];
-
-            $apartData = [
-                'title' => $title,
-                'address' => $address,
-                'full_address' => $fullAddress,
-                'full_price' => $fullPrice,
-                'photo' => $apartmentRaw->photo,
-            ];
-
-            if ($cost && (int) $cost < 15000) {
-                $apartData['price'] = $cost;
-            }
-//            dump($apartData);
-
-            $r = ApartmentsData::updateOrCreate($rawMsgData, $apartData);
-            Log::info('Сообщение '. $apartmentRaw->msg_id .' обработано.');
-//            dump('Сообщение '. $apartmentRaw->msg_id .' обработано. Данные: '. json_encode($apartData));
-        }
+        // парсим данные в классе-парсере
+        $this->parser->parse($this->chatId);
 
         return true;
     }
@@ -307,5 +260,16 @@ trait TelegramTrait {
         }
 
         return $msgIds;
+    }
+
+    /**
+     * Определить класс-обработчик
+     * @return void
+     */
+    protected function getParser(): void
+    {
+        $this->chatSettings = ChatSettings::where('chat_id', $this->chatId)->first();
+        $chatName = $this->chatSettings->chat_name;
+        $this->parser = new $this->parsers[$chatName];
     }
 }
