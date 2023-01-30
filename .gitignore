@@ -26,3 +26,4 @@ Homestead.json
 .idea
 __docs
 *.xml
+*.iml
