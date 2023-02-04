@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Backend\Parsers\Telegram;
 
-use App\Helpers\Functions;
+use App\Helpers\StringFunctions;
 use App\Http\Controllers\Controller;
 use App\Models\ApartmentsData;
 use App\Models\ChatSettings;
@@ -25,10 +25,6 @@ use Illuminate\Support\Facades\File;
 class TelegramController extends Controller
 {
     use TelegramTrait;
-
-    public const CHAT_IDS = [-1001632649859];
-    public const CHAT_ID = -1001632649859;
-    public const CASH_CHAT_ID = -1001531614658;
 
     /**
      * Получаем сообщения из телеграм канала и записываем в БД
