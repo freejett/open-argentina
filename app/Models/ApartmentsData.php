@@ -56,7 +56,16 @@ class ApartmentsData extends Model
         'updated_at',
     ];
 
+    /**
+     * Минимальное значение стоимости квартиры в долларах в фильтре
+     * @var int
+     */
     protected static int $min = 300;
+
+    /**
+     * Максимальное значение стоимости квартиры в долларах в фильтре
+     * @var int
+     */
     protected static int $max = 2000;
 
     /**
