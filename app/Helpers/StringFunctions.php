@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-class Functions
+class StringFunctions
 {
     /**
      * Replace EOL to <br>
@@ -35,12 +35,30 @@ class Functions
     }
 
     /**
+     * Оставляет в строке только цифры и точку
+     * @param $str
+     * @return array|string|string[]|null
+     */
+    public static function cleanDigitsDotStr ($str) {
+        return preg_replace('/[^0-9.]/ui', '', $str );
+    }
+
+    /**
      * Оставляет в строке только цифры англ буквы
      * @param $str
      * @return array|string|string[]|null
      */
-    public static function cleanDigitsEndStr ($str) {
-        return trim(preg_replace("/[^A-Za-z0-9\/\s]/", "", $str));
+    public static function cleanDigitsEngStr ($str) {
+        return trim(preg_replace("/[^A-Za-z0-9\/\s.]/", "", $str));
+    }
+
+    /**
+     * Оставляет в строке только цифры англ и русские буквы
+     * @param $str
+     * @return array|string|string[]|null
+     */
+    public static function cleanDigitsEngRuStr ($str) {
+        return trim(preg_replace("/[^A-Za-zА-ЯЁа-яё0-9\/\s=-]/ui", "", $str));
     }
 
     /**
