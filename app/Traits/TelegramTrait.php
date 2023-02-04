@@ -55,7 +55,7 @@ trait TelegramTrait {
         'buenas_hatas' => \App\Parsers\Aparts\Telegram\BuenasHatas::class,
     ];
 
-    protected $parser;
+    protected object $parser;
 
     /**
      * Инициализация объекта для работы с API Telegram
@@ -201,7 +201,7 @@ trait TelegramTrait {
 
     /**
      * Установить новое текущее сообщение для телеграм чата
-     * @return int
+     * @return void
      */
     protected function setNewCurrentMsgId(): void
     {
@@ -218,7 +218,7 @@ trait TelegramTrait {
      * @param $message
      * @return null|string
      */
-    protected function getMsgImage($message): string
+    protected function getMsgImage($message): string|null
     {
         $imageName = '';
 //        $fileId = $message['media']['photo']['id'];
