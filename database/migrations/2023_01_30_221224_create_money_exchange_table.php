@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('money_exchange', function (Blueprint $table) {
+        Schema::create('money_exchanges', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('chat_id')->index();
             $table->bigInteger('msg_id')->index();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('money_exchange');
+        Schema::dropIfExists('money_exchanges');
     }
 };
