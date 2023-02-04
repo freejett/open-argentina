@@ -2,7 +2,7 @@
 
 namespace App\Parsers\Aparts\Telegram;
 
-use App\Helpers\Functions;
+use App\Helpers\StringFunctions;
 use App\Models\ApartmentsData;
 use App\Models\RawAppartmentsData;
 use App\Parsers\Aparts\ApartsInterface;
@@ -83,8 +83,8 @@ class BuenasHatas implements ApartsInterface
             if (strpos($apartmentLine, 'айон')) {
                 $fullAddress = $apartmentLine;
 //                $apartmentLineAddr = preg_split('/[,|(|)]/', $apartmentLine);
-                $address = Functions::clearUmlauts($fullAddress);
-                $address = Functions::cleanDigitsEndStr($address);
+                $address = StringFunctions::clearUmlauts($fullAddress);
+                $address = StringFunctions::cleanDigitsEngStr($address);
 
                 $address = explode('   ', $address);
                 $address = $address[0];
@@ -124,12 +124,12 @@ class BuenasHatas implements ApartsInterface
                 if (count($rawCost) < 1) {
                     continue;
                 }
-                $cost = trim( Functions::cleanDigitsStr($rawCost[0]));
+                $cost = trim( StringFunctions::cleanDigitsStr($rawCost[0]));
 
                 if (!$cost) {
                     $costPrepare1 = substr($rawCost[1], 0, 7);
                     if ($costPrepare1) {
-                        $costPrepare2 = Functions::cleanDigitsStr($costPrepare1);
+                        $costPrepare2 = StringFunctions::cleanDigitsStr($costPrepare1);
                         if ($costPrepare2) {
                             $cost = (int) trim($costPrepare2);
                         }
