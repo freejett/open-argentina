@@ -62,6 +62,53 @@ trait MoneyExchangeTrait
     }
 
     /**
+     * Получаем сообщения из телеграм канала и записываем в БД
+     * @return bool
+     */
+    public function getChatMessages(): bool
+    {
+        $this->chatSettings = ChatSettings::where('chat_id', $this->chatId)->first();
+        $msgIds = $this->getMsgsIds();
+
+        // если новых сообщений нет - останавливаем
+        if (!count($msgIds)) {
+            Log::info('Для чата '. $this->chatId .' нет новых сообщений');
+            return true;
+        }
+
+        $messages_Messages = $this->MadelineProto->channels->getMessages(channel: $this->chatId, id: $msgIds);
+
+        foreach ($messages_Messages['messages'] as $k => $message) {
+            // если не сообщение или текст сообщения пустой
+            //  || !$message['message']
+            if ($message['_'] != 'message' || $message['message'] == '') {
+                continue;
+            }
+
+            $rawMsgData = [
+                'chat_id' => $this->chatId,
+                'msg_id' => $message['id'],
+            ];
+
+            $updateMsgData = [
+                'msg' => $message['message'],
+                'is_appartment' => 0,
+            ];
+
+            try {
+                $r = RawAppartmentsData::updateOrCreate($rawMsgData, $updateMsgData);
+                Log::info('Сообщение '. $message['id'] .' записали в БД.');
+                dump('Сообщение '. $this->chatId .':'. $message['id'] .' записали в БД. Данные: '. json_encode($updateMsgData));
+            } catch (Exception $exception) {
+                Log::error($exception->getMessage());;
+            }
+        }
+        $this->setNewCurrentMsgId();
+
+        return true;
+    }
+
+    /**
      * Обновить ID последнего сообщения в телеграм чате и получить настройки чата
      * @return bool
      */
