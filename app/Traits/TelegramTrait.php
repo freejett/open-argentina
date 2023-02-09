@@ -89,24 +89,11 @@ trait TelegramTrait {
         }
 
         $messages_Messages = $this->MadelineProto->channels->getMessages(channel: $this->chatId, id: $msgIds);
-//        echo '<pre>'; print_r($messages_Messages); exit();
 
         foreach ($messages_Messages['messages'] as $k => $message) {
             // если не сообщение или текст сообщения пустой
             //  || !$message['message']
             if ($message['_'] != 'message' || $message['message'] == '') {
-                // значит квартира перенесена в архив
-//                $rawApartData = RawAppartmentsData::where('chat_id', $this->chatId)
-//                    ->where('msg_id', $message['id'])
-//                    ->first();
-//
-//                // устанавливаем метку, что сообщение - не квартира
-//                // тогда эта квартина не будет выпадать в результатах поиска
-//                if ($rawApartData) {
-//                    $rawApartData->fill(['is_appartment', 0])
-//                        ->save();
-//                }
-
                 continue;
             }
 
