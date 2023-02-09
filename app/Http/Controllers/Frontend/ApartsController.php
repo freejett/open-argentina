@@ -8,6 +8,7 @@ use App\Http\Requests\StoreApartmentsDataRequest;
 use App\Http\Requests\UpdateApartmentsDataRequest;
 use App\Models\ApartmentsData;
 use App\Models\RawAppartmentsData;
+use App\Models\Realtor;
 use App\Models\References\ReferenceRoomsNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -55,14 +56,26 @@ class ApartsController extends FrontController
     public function show($id)
     {
         $apartment = ApartmentsData::find($id);
+        $realtor = Realtor::find(1);
         $rawApartments = RawAppartmentsData::where('chat_id', $apartment->chat_id)
                             ->where('msg_id', $apartment->msg_id)
                             ->first();
-//        dd($rawApartments);
+//        dd($apartment);
 
         return view($this->templateBase . $this->currentMethod, [
             'apartment' => $apartment,
+            'realtor' => $realtor,
             'rawApartments' => $rawApartments,
+        ]);
+    }
+
+
+    public function show_realtor($channelId)
+    {
+        $realtor = Realtor::find($channelId);
+
+        return view($this->templateBase . $this->currentMethod, [
+            'realtor' => $realtor,
         ]);
     }
 }

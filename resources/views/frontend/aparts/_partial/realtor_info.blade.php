@@ -4,13 +4,15 @@
 
             <div class="clear">
                 <div class="col-xs-4 col-sm-4 dealer-face">
-                    <a href="">
+                    <a href="{{ route('front.aparts.realtor', 1) }}">
                         <img src="/assets/estate/assets/img/client-face1.png" class="img-circle">
                     </a>
                 </div>
                 <div class="col-xs-8 col-sm-8 ">
                     <h3 class="dealer-name">
-                        <a href="">Ксения</a> <br>
+                        <a href="{{ route('front.aparts.realtor', 1) }}">
+                            {{ $realtor->name }}
+                        </a> <br>
                         <span>Помощь в подборе жилья</span>
                     </h3>
 {{--                    <div class="dealer-social-media">--}}
@@ -35,12 +37,25 @@
 
             <div class="clear">
                 <ul class="dealer-contacts">
-                    <li><i class="pe-7s-map-marker strong"> </i> 9089 your adress her</li>
-                    <li><i class="pe-7s-mail strong"> </i> email@yourcompany.com</li>
-                    <li><i class="pe-7s-call strong"> </i> +1 908 967 5906</li>
+                    @if ($realtor->telegram)
+                    <li>
+                        <i class="pe-7s-telegram" aria-hidden="true"></i>
+                        {{ $realtor->telegram }}
+                    </li>
+                    @endif
+                    @if ($realtor->whatsapp)
+                        <li>
+                            <i class="pe-7s-whatsapp" aria-hidden="true"></i>
+                            {{ $realtor->whatsapp }}
+                        </li>
+                    @endif
+{{--                    <li><i class="pe-7s-map-marker strong"> </i> 9089 your adress her</li>--}}
+{{--                    <li><i class="pe-7s-mail strong"> </i> email@yourcompany.com</li>--}}
+{{--                    <li><i class="pe-7s-call strong"> </i> +1 908 967 5906</li>--}}
                 </ul>
-                <p>Привет 👋  Добро пожаловать в канал аренды недвижимости в Буэнос-Айрес!</p>
-                <p>Меня зовут Ксюша, я и моя команда  живём в Аргентине и помогаем всем, кто сюда приезжает или уже обосновался, найти, как временное жилье на первые 1-3 месяца, так и квартиру/дом своей мечты на более длительный срок ❤️ </p>
+                <div>
+                    {!! nl2br($realtor->msg_preview) !!}
+                </div>
             </div>
 
         </div>
