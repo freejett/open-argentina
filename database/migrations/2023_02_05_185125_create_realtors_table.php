@@ -19,6 +19,7 @@ return new class extends Migration
             $table->char('name', 255)->nullable();
             $table->char('telegram', 255)->nullable();
             $table->char('whatsapp', 255)->nullable();
+            $table->text('msg_preview')->nullable();
             $table->text('msg')->nullable();
             $table->timestamps();
         });
