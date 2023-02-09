@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class MoneyExchange extends Model
 {
@@ -19,4 +20,30 @@ class MoneyExchange extends Model
         'created_at',
         'updated_at',
     ];
+
+
+    /**
+     * Возвращает текущие курсы обмена
+     * @param array $exchangeDirectionsId
+     * @return Collection
+     */
+    public static function getTodayExchanges(array $exchangeDirectionsId = []): Collection
+    {
+        $chatIds = config('parsers.exchange.telegram');
+        $exchange = collect([]);
+
+        foreach ($chatIds as $chatId => $chatName) {
+            $query = self::select('chat_id', 'exchange_direction_id', 'date', 'rate', 'msg_id')
+                ->where('chat_id', $chatId)
+                ->whereRaw("msg_id = (select max(`msg_id`) from money_exchanges where chat_id = $chatId)");
+
+            if (count($exchangeDirectionsId)) {
+                $query->whereIn('exchange_direction_id', $exchangeDirectionsId);
+            }
+
+            $exchange = $query->get();
+        }
+
+        return $exchange;
+    }
 }
