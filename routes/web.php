@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\MainController;
 use App\Http\Controllers\Frontend\ApartsController;
 use App\Http\Controllers\Backend\Parsers\Telegram\TelegramController;
 use App\Http\Controllers\Backend\Geo\HereMapController;
+use App\Http\Controllers\Backend\Parsers\MoneyExchange\TelegramController as MoneyExchangeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +29,18 @@ Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'i
  */
 Route::name('parsers.')->group(function () {
     /**
-     * Телеграм
+     * Парсер апартаментов Телеграм
      */
     Route::controller(TelegramController::class)->prefix('telegram')->name('telegram.')->group(function () {
+        Route::any('/', 'index')->name('index');
+        Route::get('/update_chats_settings', 'updateChatsSettings')->name('update_chats_settings.parser');
+        Route::get('/parse', 'parse')->name('parse');
+    });
+
+    /**
+     * Парсер обменных курсов Телеграм
+     */
+    Route::controller(MoneyExchangeController::class)->prefix('money_exchange')->name('money_exchange.')->group(function () {
         Route::any('/', 'index')->name('index');
         Route::get('/update_chats_settings', 'updateChatsSettings')->name('update_chats_settings.parser');
         Route::get('/parse', 'parse')->name('parse');
@@ -56,10 +66,17 @@ Route::name('geo.')->group(function () {
 Route::name('front.')->group(function () {
     Route::get('/', [MainController::class, 'index'])->name('main');
 
-    // Apartments
+    /**
+     * Квартиры
+     */
     Route::controller(ApartsController::class)->prefix('aparts')->name('aparts.')->group(function () {
+        // список/фильтр квартир
         Route::get('/', 'index')->name('index');
+        // страница риэлтора
+        Route::get('/realtor/{channel_id}', 'show_realtor')->name('realtor');
+        // просмотр квартиры
         Route::get('/{id}/show', 'show')->name('show');
+
     });
 
 });
