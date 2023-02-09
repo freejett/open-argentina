@@ -15,8 +15,8 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/assets/estate/assets/css/normalize.css">
     <link rel="stylesheet" href="/assets/estate/assets/css/font-awesome.min.css">
@@ -40,36 +40,7 @@
     <div id="status">&nbsp;</div>
 </div>
 <!-- Body content -->
-
-{{--
-<div class="header-connect">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-5 col-sm-8  col-xs-12">
-                <div class="header-half header-call">
-                    <p>
-                        <span><i class="pe-7s-call"></i> +1 234 567 7890</span>
-                        <span><i class="pe-7s-mail"></i> your@company.com</span>
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-2 col-md-offset-5  col-sm-3 col-sm-offset-1  col-xs-12">
-                <div class="header-half header-social">
-                    <ul class="list-inline">
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-vine"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--End top header -->
---}}
+@include('frontend._partial.page_top')
 
 @include('frontend._layout._partial.main_menu')
 
@@ -88,7 +59,7 @@
                         <div class="footer-title-line"></div>
 
                         <img src="/assets/estate/assets/img/logo_oa.png" alt="" class="wow pulse" data-wow-delay="1s">
-                        <p>Проект, собирающий общедоступную информацию о жизни в Аргентине и помогающий людям адаптироваться в новой стране</p>
+                        <p>Open Argentina - проект, собирающий общедоступную информацию о жизни в Аргентине и помогающий людям адаптироваться в новой стране</p>
 {{--                        <ul class="footer-adress">--}}
 {{--                            <li><i class="pe-7s-map-marker strong"> </i> 9089 your adress her</li>--}}
 {{--                            <li><i class="pe-7s-mail strong"> </i> email@yourcompany.com</li>--}}

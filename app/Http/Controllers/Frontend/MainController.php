@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Frontend;
 use App\Filters\Frontend\ApartsFilter;
 use App\Http\Controllers\Controller;
 use App\Models\ApartmentsData;
+use App\Models\MoneyExchange;
+use App\Models\References\ReferenceExchangeDirections;
 use Illuminate\Http\Request;
 
 class MainController extends FrontController
 {
+    protected array $chatIds;
+
     public function __construct()
     {
         parent::__construct();
@@ -28,9 +32,16 @@ class MainController extends FrontController
         $apartments = ApartmentsData::select('id', 'title', 'lat', 'lng', 'price')
             ->filter($filter)
             ->get();
-//        dd($apartments->toArray());
+
+        // направления обмена
+        $referenceExchangeDirections = ReferenceExchangeDirections::all()->keyBy('direction_id');
+        // текущие курсы обмена
+        $exchange = MoneyExchange::getTodayExchanges();
+
         return view($this->templateBase . $this->currentMethod, [
             'apartments' => $apartments,
+            'referenceExchangeDirections' => $referenceExchangeDirections,
+            'exchange' => $exchange,
         ]);
     }
 }
