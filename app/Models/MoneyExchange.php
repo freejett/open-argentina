@@ -23,7 +23,7 @@ class MoneyExchange extends Model
 
 
     /**
-     * Возвращает текущие курсы обмена
+     * Возвращает текущие курсы обмена для виджета
      * @param array $exchangeDirectionsId
      * @return Collection
      */
@@ -45,5 +45,24 @@ class MoneyExchange extends Model
         }
 
         return $exchange;
+    }
+
+    /**
+     * Возвратить последние сообщения об обмене для каждого ТГ-канала
+     * @return Collection
+     */
+    public static function getExchanges(): Collection
+    {
+        $chatIds = config('parsers.exchange.telegram');
+        $exchange = collect([]);
+
+        foreach ($chatIds as $chatId => $chatName) {
+            $exchange[] = self::select('chat_id', 'exchange_direction_id', 'date', 'rate', 'msg_id', 'msg')
+                ->where('chat_id', $chatId)
+                ->whereRaw("msg_id = (select max(`msg_id`) from money_exchanges where chat_id = $chatId)")
+                ->first(1);
+        }
+
+        return collect($exchange);
     }
 }
