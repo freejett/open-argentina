@@ -22,7 +22,6 @@ class FrontController extends Controller
 
     public function __construct()
     {
-//        dump(route('parsers.telegram.parser'));
         $this->currentMethod = Route::getCurrentRoute()->getActionMethod();
 
         view()->share([
@@ -35,7 +34,7 @@ class FrontController extends Controller
         return [
             route('front.main') => '<i class="fa fa-home" aria-hidden="true"></i>',
             route('front.aparts.index') => 'Поиск квартиры',
-            '1' => 'Обмен валюты',
+            route('front.exchange.index') => 'Обмен валюты',
             '2' => 'Каталог услуг',
             '3' => 'Блог / Новости',
             '4' => 'Контакты',

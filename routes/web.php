@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 //use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\MainController;
 use App\Http\Controllers\Frontend\ApartsController;
+use App\Http\Controllers\Frontend\ExchangeController;
 use App\Http\Controllers\Backend\Parsers\Telegram\TelegramController;
 use App\Http\Controllers\Backend\Geo\HereMapController;
 use App\Http\Controllers\Backend\Parsers\MoneyExchange\TelegramController as MoneyExchangeController;
@@ -76,7 +77,14 @@ Route::name('front.')->group(function () {
         Route::get('/realtor/{channel_id}', 'show_realtor')->name('realtor');
         // просмотр квартиры
         Route::get('/{id}/show', 'show')->name('show');
+    });
 
+    /**
+     * Обменные курсы
+     */
+    Route::controller(ExchangeController::class)->prefix('exchange')->name('exchange.')->group(function () {
+        // обменные курсы каналов
+        Route::get('/', 'index')->name('index');
     });
 
 });
