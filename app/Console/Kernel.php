@@ -15,16 +15,25 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-//         $schedule->command('telegram:update_chat_settings')->daily();
-//         $schedule->command('telegram:get_chat_messages')->everyThreeHours();
-//         $schedule->command('telegram:parse')->everyThreeHours();
-//         $schedule->command('geocoder_here:search_coords')->dailyAt('01:00');
+        $schedule->command('telegram:update_chat_settings')->everyThreeHours();
+        $schedule->command('telegram:get_chat_messages')->everyThreeHours();
+        $schedule->command('telegram:parse')->everyThreeHours();
+
+        $schedule->command('exchange:update_chat_settings')->everyThreeHours();
+        $schedule->command('exchange:get_chat_messages')->everyThreeHours();
+        $schedule->command('exchange:parse')->everyThreeHours();
+
+        $schedule->command('geocoder_here:search_coords')->dailyAt('01:00');
 
         /*
          * tests
          */
 //        $schedule->command('telegram:get_chat_messages')->everyMinute();
-        $schedule->command('geocoder_here:search_coords')->everyMinute();
+//        $schedule->command('geocoder_here:search_coords')->everyMinute();
+
+//        $schedule->command('exchange:update_chat_settings')->everyMinute();
+//        $schedule->command('exchange:get_chat_messages')->everyMinute();
+//        $schedule->command('exchange:parse')->everyMinute();
     }
 
     /**
