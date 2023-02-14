@@ -6,15 +6,19 @@
     <!-- property area -->
     <div class="properties-area recent-property" style="background-color: #FFF;">
 
-        <div class="container">
-            <div class="row">
+        <div class="page-head mb-5">
+            <div class="container">
                 <div class="row">
-                    <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
-                        <!-- /.feature title -->
-                        <h2>Oбменные курсы</h2>
-                        <br>
+                    <div class="page-head-content">
+                        <h1 class="page-title">Oбменные курсы</h1>
+                        <p class="ml-4">Обмен долларов, евро, рублей, тенге на песо</p>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <div class="row">
 
                 @foreach ($exchanges as $exchange)
                 <div class="row row-feat">
