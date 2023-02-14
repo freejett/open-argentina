@@ -12,7 +12,7 @@
         }),
         latlng = L.latLng(-34.61, -58.43);
 
-    let map = L.map('map', {center: latlng, zoom: 13, layers: [tiles]});
+    let map = L.map('map', {center: latlng, zoom: 13, layers: [tiles], scrollWheelZoom: false});
     let markers = L.markerClusterGroup();
     let addressPoints = [@foreach ($apartments as $apartment)@if($apartment->lng)[{{ $apartment->lng }}, {{ $apartment->lat }}, "<a href='{{ route('front.aparts.show', $apartment->id) }}' target='_blank'><b>{{ $apartment->title }}</b></a><br />{{ $apartment->price }} USD"],@endif @endforeach
     ];

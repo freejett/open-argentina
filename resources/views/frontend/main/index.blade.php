@@ -65,7 +65,34 @@
 
     @include('frontend._partial.widgets.exchange_rate')
 
-
+    <!-- Count area -->
+    <div class="count-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title mt-0">
+                    <!-- /.feature title -->
+                    <h2 class="mb-0">Немного о проекте</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12 percent-blocks m-main pt-5" data-waypoint-scroll="true">
+                    <div class="row">
+                        <p>Проект Open Argentina создан с целью собрать в одном месте необходимую информацию о жизни в Аргентине и, в частности, в Буэнос-Айресе. Идея возникла после переезда в Аргентину и попытке как-то сориентироваться в новых условиях.</p>
+                        <p>На страницах проекта можно найти информацию о русскоязычных сообществах по:</p>
+                        <ul>
+                            <li>поиску квартиры</li>
+                            <li>обмену валют</li>
+                            <li>доставку еды</li>
+                            <li>поиску тренера, врача, электрика и т.д.</li>
+                            <li>клубам и спортивным секицям</li>
+                            <li>и многое другое</li>
+                        </ul>
+                        <p>Если у вас будут какие-то идеи, пожелания - пишите нам, попробуем сделать этот проект лучше :)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @include('frontend._partial.widgets.stat_block')
 @endsection

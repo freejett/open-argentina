@@ -4,11 +4,11 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
                 <!-- /.feature title -->
-                <h2>Обменные курсы</h2>
+                <h2 class="mb-5">Обменные курсы</h2>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 col-xs-12 percent-blocks m-main" data-waypoint-scroll="true">
+            <div class="col-md-12 col-xs-12 1percent-blocks m-main" data-waypoint-scroll="true">
                 <div class="row">
                     @foreach($exchange as $exchangeItem)
                         <div class="col-sm-3 col-xs-6 mb-5">
@@ -28,6 +28,10 @@
 {{--                            </div>--}}
 {{--                        </div>--}}
 {{--                    </div>--}}
+                </div>
+
+                <div class="text-right">
+                    <a href="{{ route('front.exchange.index') }}" class="btn btn-default">Подробнее</a>
                 </div>
             </div>
         </div>
