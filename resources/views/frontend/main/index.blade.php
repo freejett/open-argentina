@@ -8,7 +8,7 @@
         @include('frontend._partial.map')
     </div>
 
-    <div class="home-lager-shearch" style="background-color: rgb(252, 252, 252); padding-top: 25px; margin-top: -125px;">
+    <div class="home-lager-shearch" style="background-color: rgb(252, 252, 252); padding-top: 25px; margin-top: 0;">
         <div class="container">
             <div class="col-md-12 large-search">
                 <div class="search-form wow pulse">
@@ -48,11 +48,14 @@
                                         </label>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <input type="submit" value="Искать" class="btn btn-default">
+                                </div>
                                 <!-- End of  -->
                             </div>
                         </div>
                         <div class="center">
-                            <input type="submit" value="" class="btn btn-default btn-lg-sheach">
+{{--                            <input type="submit" value="" class="btn btn-default btn-lg-sheach">--}}
                         </div>
                     </form>
                 </div>
