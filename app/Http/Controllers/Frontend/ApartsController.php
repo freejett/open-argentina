@@ -32,7 +32,8 @@ class ApartsController extends FrontController
     public function index(Request $request, ApartsFilter $filter)
     {
         // квартиры для карты
-        $apartments = ApartmentsData::filter($filter)->get();
+        $apartments = ApartmentsData::filter($filter)->paginate(30);
+
         // типа квартир
         $apartTypes = ReferenceRoomsNumber::pluck('title', 'number_of_rooms');
         // нижний и верхний края диапазона цены

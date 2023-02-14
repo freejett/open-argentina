@@ -17,12 +17,21 @@
             </div>
 
             <div class="col-md-9  pr0 padding-top-40 properties-page">
+                <div class="post-header single mb-5 mt-3">
+                    <div class="">
+                        <h2 class="wow fadeInLeft animated ml-4">Поиск недвижимости</h2>
+                        <div class="title-line wow fadeInRight animated"></div>
+                    </div>
+                </div>
+
                 <div class="col-md-12 clear">
                     @include('frontend._partial.page_view_settings')
                 </div>
 
                 <div class="col-md-12 clear">
                     <div id="list-type" class="proerty-th m-4">
+                        {{ $apartments->onEachSide(2)->links() }}
+
                         @foreach($apartments as $i => $apartment)
                             @include('frontend.aparts._partial.apart_preview_card')
 
@@ -30,6 +39,8 @@
                                 <div class="clear"></div>
                             @endif
                         @endforeach
+
+                        {!! $apartments->onEachSide(2)->links() !!}
                     </div>
                 </div>
             </div>
