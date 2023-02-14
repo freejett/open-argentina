@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="/assets/estate/assets/css/owl.carousel.css">
     <link rel="stylesheet" href="/assets/estate/assets/css/owl.theme.css">
     <link rel="stylesheet" href="/assets/estate/assets/css/owl.transitions.css">
-    <link rel="stylesheet" href="/assets/estate/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/estate/assets/css/style.css?v=1">
     <link rel="stylesheet" href="/assets/estate/assets/css/responsive.css">
 </head>
 <body>
@@ -69,15 +69,12 @@
                 </div>
                 <div class="col-md-3 col-sm-6 wow fadeInRight animated">
                     <div class="single-footer">
-                        <h4>Быстрые ссылки</h4>
+                        <h4>Правовые ссылки</h4>
                         <div class="footer-title-line"></div>
                         <ul class="footer-menu">
-                            <li><a href="properties.html">Properties</a>  </li>
-                            <li><a href="#">Services</a>  </li>
-                            <li><a href="submit-property.html">Submit property </a></li>
-                            <li><a href="contact.html">Contact us</a></li>
-                            <li><a href="faq.html">fqa</a>  </li>
-                            <li><a href="faq.html">Terms </a>  </li>
+                            <li><a href="{{ route('front.page.show', 'privacy') }}">Политика конфиденциальности</a>  </li>
+                            <li><a href="{{ route('front.page.show', 'disclaimer') }}">Отказ от ответственности</a>  </li>
+                            <li><a href="{{ route('front.page.show', 'terms') }}">Пользовательское соглашение</a>  </li>
                         </ul>
                     </div>
                 </div>
@@ -168,16 +165,18 @@
         <div class="container">
             <div class="row">
                 <div class="pull-left">
-                    Дизайн сайта - <span> (C) <a href="http://www.KimaroTec.com">KimaroTheme</a>, Все права защищены 2016</span>
-                    Дизайн логотипа - <span> <a href="https://www.vecteezy.com/free-vector/home-logo"> Vecteezy</a> </span>
+                    Дизайн сайта - <span> (C) <a href="http://www.KimaroTec.com">KimaroTheme</a>, 2016</span>
+                    Логотип - <span> <a href="https://www.vecteezy.com/free-vector/home-logo"> Vecteezy</a> </span>
                 </div>
                 <div class="bottom-menu pull-right">
                     <ul>
-                        <li><a class="wow fadeInUp animated" href="/" data-wow-delay="0.2s">Главная</a></li>
-                        <li><a class="wow fadeInUp animated" href="{{ route('front.aparts.index') }}" data-wow-delay="0.3s">Поиск квартиры</a></li>
-                        <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.4s">Каталог услуг</a></li>
-                        <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.6s">Блог</a></li>
-                        <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.8s">Контакты</a></li>
+                        @foreach($menuItems as $link => $title )
+                            <li>
+                                <a  class="wow fadeInUp animated" data-wow-delay="{{ $loop->index * 1.15 / 10 }}s" href="{!! $link !!}">
+                                    {!! $title !!}
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

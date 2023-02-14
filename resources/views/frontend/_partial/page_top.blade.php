@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="col-md-8 col-sm-3  col-xs-12">
-                <div class="header-half header-social">
+                <div class="header-half header-social text-right">
                     @widget('exchangeRate')
                 </div>
             </div>
