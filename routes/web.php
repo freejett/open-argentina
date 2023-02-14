@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\MainController;
 use App\Http\Controllers\Frontend\ApartsController;
 use App\Http\Controllers\Frontend\ExchangeController;
+use App\Http\Controllers\Frontend\PagesController;
 use App\Http\Controllers\Backend\Parsers\Telegram\TelegramController;
 use App\Http\Controllers\Backend\Geo\HereMapController;
 use App\Http\Controllers\Backend\Parsers\MoneyExchange\TelegramController as MoneyExchangeController;
@@ -85,6 +86,14 @@ Route::name('front.')->group(function () {
     Route::controller(ExchangeController::class)->prefix('exchange')->name('exchange.')->group(function () {
         // обменные курсы каналов
         Route::get('/', 'index')->name('index');
+    });
+
+    /**
+     * Статичные страницы
+     */
+    Route::controller(PagesController::class)->prefix('page')->name('page.')->group(function () {
+        // статичная страница
+        Route::get('/{slug}', 'show')->name('show');
     });
 
 });
