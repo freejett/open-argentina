@@ -34,3 +34,5 @@ public/index.madeline.ipcState.php
 public/index.madeline.safe.php
 public/MadelineProto.log
 README.md
+.idea/php.xml
+.idea/ba_apart.iml
