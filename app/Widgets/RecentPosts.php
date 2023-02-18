@@ -3,6 +3,7 @@
 namespace App\Widgets;
 
 use Arrilot\Widgets\AbstractWidget;
+use Canvas\Models\Post;
 
 class RecentPosts extends AbstractWidget
 {
@@ -19,7 +20,9 @@ class RecentPosts extends AbstractWidget
      */
     public function run()
     {
-        $lastPosts = \Canvas\Models\Post::published()->limit(5)->get();
+        $lastPosts = Post::published()
+            ->limit(5)
+            ->get();
 
         return view('widgets.recent_posts', [
             'config' => $this->config,
