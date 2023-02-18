@@ -3,13 +3,16 @@
 use Illuminate\Support\Facades\Route;
 
 //use App\Http\Controllers\Controller;
-use App\Http\Controllers\Frontend\MainController;
 use App\Http\Controllers\Frontend\ApartsController;
+use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ExchangeController;
+use App\Http\Controllers\Frontend\MainController;
 use App\Http\Controllers\Frontend\PagesController;
-use App\Http\Controllers\Backend\Parsers\Telegram\TelegramController;
 use App\Http\Controllers\Backend\Geo\HereMapController;
 use App\Http\Controllers\Backend\Parsers\MoneyExchange\TelegramController as MoneyExchangeController;
+use App\Http\Controllers\Backend\Parsers\Telegram\TelegramController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -86,6 +89,16 @@ Route::name('front.')->group(function () {
     Route::controller(ExchangeController::class)->prefix('exchange')->name('exchange.')->group(function () {
         // обменные курсы каналов
         Route::get('/', 'index')->name('index');
+    });
+
+    /**
+     * Блог
+     */
+    Route::controller(BlogController::class)->prefix('blog')->name('blog.')->group(function () {
+        // список последних записей в блоге
+        Route::get('/', 'index')->name('index');
+        // просмотр записи
+        Route::get('/{slug}', 'show')->name('show');
     });
 
     /**
