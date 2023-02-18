@@ -36,7 +36,7 @@ class FrontController extends Controller
             route('front.aparts.index') => 'Поиск квартиры',
             route('front.exchange.index') => 'Обмен валюты',
             '2' => 'Каталог услуг',
-            '3' => 'Блог / Новости',
+            route('front.blog.index') => 'Блог / Новости',
             '4' => 'Контакты',
         ];
     }
