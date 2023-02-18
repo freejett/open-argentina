@@ -40,11 +40,11 @@ class TelegramController extends Controller
     public function index(): bool
     {
         foreach ($this->chatIds as $chatId => $chatName) {
-//            $this->telegramInit($chatId);
-//            $this->getChatMessages();
+            $this->telegramInit($chatId);
+            $this->getChatMessages();
 
-            $cashMsg = RawAppartmentsData::where('chat_id', $chatId)->orderBy('msg_id', 'desc')->get()->toArray();
-            echo '<pre>'; print_r($cashMsg); //exit();
+//            $cashMsg = RawAppartmentsData::where('chat_id', $chatId)->orderBy('msg_id', 'desc')->get()->toArray();
+//            echo '<pre>'; print_r($cashMsg); //exit();
         }
         return true;
     }

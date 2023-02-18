@@ -28,7 +28,9 @@ class Kernel extends ConsoleKernel
         /*
          * tests
          */
+//        $schedule->command('telegram:update_chat_settings')->everyMinute();
 //        $schedule->command('telegram:get_chat_messages')->everyMinute();
+//        $schedule->command('telegram:parse')->everyMinute();
 //        $schedule->command('geocoder_here:search_coords')->everyMinute();
 
 //        $schedule->command('exchange:update_chat_settings')->everyMinute();
