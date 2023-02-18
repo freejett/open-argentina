@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Filters\Frontend\ApartsFilter;
-use App\Http\Controllers\Controller;
 use App\Models\ApartmentsData;
 use App\Models\MoneyExchange;
 use App\Models\References\ReferenceExchangeDirections;
@@ -28,9 +27,13 @@ class MainController extends FrontController
 
     public function index(Request $request, ApartsFilter $filter)
     {
+//        $lastPosts = \Canvas\Models\Post::published()->limit(5)->get();
+//        dd($lastPosts);
         // квартиры для карты
         $apartments = ApartmentsData::select('id', 'title', 'lat', 'lng', 'price')
             ->filter($filter)
+            ->where('chat_id', -1001632649859)
+            ->whereNull('status')
             ->get();
 
         // направления обмена
