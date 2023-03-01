@@ -23,6 +23,7 @@ return [
     'exchange' => [
         'telegram' => [
             -1001531614658 => 'cashflowexchange',
+            -1001828314778 => 'ArgentinaUSD',
         ],
     ],
 
