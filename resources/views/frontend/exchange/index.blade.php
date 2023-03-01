@@ -17,53 +17,75 @@
             </div>
         </div>
 
-        <div class="container mt-5">
+        <div class="container padding-top-40">
             <div class="row">
 
-                @foreach ($exchanges as $exchange)
                 <div class="row row-feat">
-                    <div class="col-md-12">
+                    <div class="blog-asside-right col-md-3">
+                        @include('frontend.aparts._partial.ads_block')
+                        @include('frontend.aparts._partial.similar_apartments')
+                    </div>
+
+                    <div class="blog-lst col-md-9">
+                        @foreach ($exchanges as $chatId => $exchange)
                         <div class="col-sm-6 feat-list">
                             <div class="panel-group">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title fqa-title" >
-                                            Курсы канала {{ $telegramChatsInfo[$exchange->chat_id]->title }}
+                                    <div class="">
+                                        @if ($telegramChatsInfo[$chatId]->chat_photo)
+                                            <a class="pull-left" href="{{ route('front.exchange.show', $telegramChatsInfo[$chatId]->username) }}">
+                                                <img class="img-responsive img-circle telegram_avatar_min" src="{{ asset($avatarPath . $chatId .'/'. $telegramChatsInfo[$chatId]->chat_photo) }}" />
+                                            </a>
+                                        @endif
+                                        <h4 class="" >
+                                            <a href="{{ route('front.exchange.show', $telegramChatsInfo[$chatId]->username) }}">
+                                                Канал {{ $telegramChatsInfo[$chatId]->title }}
+                                            </a>
                                         </h4>
                                     </div>
                                     <div id="fqa11" class="panel-collapse  fqa-body">
                                         <div class="panel-body">
-                                            {!! nl2br($exchange->msg) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                            <p>Обменные курсы:</p>
+                                            <ul class="list-none">
+                                                @foreach($exchange as $exchangeItem)
+                                                    <li class="mr-3">
+                                                        {!! $referenceExchangeDirections[$exchangeItem->exchange_direction_id]->directionString !!}:
+                                                        <span><b>{{ $exchangeItem->rate }}</b></span>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
 
-                        <div class="col-sm-6 feat-list">
-                            <div class="panel-group">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title fqa-title" data-toggle="" data-target="#fqa22" >
-                                            Канал {{ $telegramChatsInfo[$exchange->chat_id]->title }}
-                                        </h4>
-                                    </div>
-                                    <div id="fqa22" class="panel-collapse  fqa-body">
-                                        <div class="panel-body">
-                                            <p>По вопросам обмена: <a target="_blank" href="//t.me/{{ $telegramChatsInfo[$exchange->chat_id]->contact }}">
-                                                    {{ $telegramChatsInfo[$exchange->chat_id]->contact }}
-                                                </a></p>
-                                            {!! nl2br($telegramChatsInfo[$exchange->chat_id]->about) !!}
+                                            <a class="btn btn-default" href="{{ route('front.exchange.show', $telegramChatsInfo[$chatId]->username) }}">
+                                                Подробнее &rarr;
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        @endforeach
+
+{{--                        <div class="col-sm-6 feat-list">--}}
+{{--                            <div class="panel-group">--}}
+{{--                                <div class="panel panel-default">--}}
+{{--                                    <div class="panel-heading">--}}
+{{--                                        <h4 class="panel-title fqa-title" data-toggle="" data-target="#fqa22" >--}}
+{{--                                            Канал {{ $telegramChatsInfo[$exchange->chat_id]->title }}--}}
+{{--                                        </h4>--}}
+{{--                                    </div>--}}
+{{--                                    <div id="fqa22" class="panel-collapse  fqa-body">--}}
+{{--                                        <div class="panel-body">--}}
+{{--                                            <p>По вопросам обмена: <a target="_blank" href="//t.me/{{ $telegramChatsInfo[$exchange->chat_id]->contact }}">--}}
+{{--                                                    {{ $telegramChatsInfo[$exchange->chat_id]->contact }}--}}
+{{--                                                </a></p>--}}
+{{--                                            {!! nl2br($telegramChatsInfo[$exchange->chat_id]->about) !!}--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
-
                 </div>
-                @endforeach
-
             </div>
         </div>
     </div>

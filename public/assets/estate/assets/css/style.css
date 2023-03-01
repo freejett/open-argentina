@@ -2527,8 +2527,8 @@ padding-bottom: 15px;
     padding: 100px 0px 70px;
 }
 .blog-lst img{
-  width:100%;
-  padding-bottom: 15px;
+  /*width:100%;*/
+  /*padding-bottom: 15px;*/
 }
 .blog-lst .comment  img {
     width: auto;
@@ -3047,6 +3047,13 @@ padding: 10px;
 }
 #map {
     height: 300px;
+}
+
+.telegram_avatar_min {
+    width: 100px;
+    border: 1px #ececec solid;
+    height: 100px;
+    margin: 0 25px 0 0;
 }
 
 .m-0 { margin:0!important; }

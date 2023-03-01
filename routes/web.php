@@ -85,6 +85,8 @@ Route::name('front.')->group(function () {
     Route::controller(ExchangeController::class)->prefix('exchange')->name('exchange.')->group(function () {
         // обменные курсы каналов
         Route::get('/', 'index')->name('index');
+        // просмотр обменных курсов канала
+        Route::get('/{channel_name}', 'show')->name('show');
     });
 
     /**
