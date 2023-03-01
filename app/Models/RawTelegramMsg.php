@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @property string updated_at
  *
  */
-class RawAppartmentsData extends Model
+class RawTelegramMsg extends Model
 {
     use HasFactory;
 

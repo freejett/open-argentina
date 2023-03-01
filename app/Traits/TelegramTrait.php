@@ -3,7 +3,7 @@
 namespace App\Traits;
 
 use App\Models\ChatSettings;
-use App\Models\RawAppartmentsData;
+use App\Models\RawTelegramMsg;
 use danog\MadelineProto\API;
 use danog\MadelineProto\Exception;
 use Illuminate\Support\Facades\Log;
@@ -61,12 +61,18 @@ trait TelegramTrait {
      * Инициализация объекта для работы с API Telegram
      * @return void
      */
-    public function telegramInit($chatId = null): void
+    public function telegramInit(): void
     {
         $this->MadelineProto = new API('index.madeline');
         $me = $this->MadelineProto->start();
-//        $me = $this->MadelineProto->getSelf();
+    }
 
+    /**
+     * @param $chatId
+     * @return void
+     */
+    public function setChatId($chatId = null): void
+    {
         // для работы с конкретным чатом
         if ($chatId) {
             $this->chatId = $chatId;
@@ -118,7 +124,7 @@ trait TelegramTrait {
             ];
 
             try {
-                $r = RawAppartmentsData::updateOrCreate($rawMsgData, $updateMsgData);
+                $r = RawTelegramMsg::updateOrCreate($rawMsgData, $updateMsgData);
                 Log::info('Сообщение '. $message['id'] .' записали в БД. Фото: '. $imageName);
                 dump('Сообщение '. $message['id'] .' записали в БД. Данные: '. json_encode($updateMsgData));
             } catch (Exception $exception) {
@@ -231,7 +237,7 @@ trait TelegramTrait {
 
         // если докачиваем только фотографии, то выбираем ID сообщений без фото
         if (\Request::get('only_photos')) {
-            $msgIds = RawAppartmentsData::where('is_appartment', 1)->whereNull('photo')->pluck('msg_id')->toArray();
+            $msgIds = RawTelegramMsg::where('is_appartment', 1)->whereNull('photo')->pluck('msg_id')->toArray();
             return $msgIds;
         }
 

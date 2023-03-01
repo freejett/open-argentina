@@ -3,7 +3,8 @@
 namespace App\Traits;
 
 use App\Models\ChatSettings;
-use App\Models\RawAppartmentsData;
+use App\Models\Telegram\TelegramChat;
+use App\Models\RawTelegramMsg;
 use danog\MadelineProto\API;
 use danog\MadelineProto\Exception;
 use Illuminate\Support\Facades\Log;
@@ -41,6 +42,7 @@ trait MoneyExchangeTrait
      */
     protected array $parsers = [
         'cashflowexchange' => \App\Parsers\Exchange\Telegram\CashflowExchange::class,
+        'ArgentinaUSD' => \App\Parsers\Exchange\Telegram\ArgentinaUSD::class,
     ];
 
     protected object $parser;
@@ -50,11 +52,18 @@ trait MoneyExchangeTrait
      * @param null $chatId
      * @return void
      */
-    public function telegramInit($chatId = null): void
+    public function telegramInit(): void
     {
         $this->MadelineProto = new API('index.madeline');
         $me = $this->MadelineProto->start();
+    }
 
+    /**
+     * @param $chatId
+     * @return void
+     */
+    public function setChatId($chatId = null): void
+    {
         // для работы с конкретным чатом
         if ($chatId) {
             $this->chatId = $chatId;
@@ -96,7 +105,7 @@ trait MoneyExchangeTrait
             ];
 
             try {
-                $r = RawAppartmentsData::updateOrCreate($rawMsgData, $updateMsgData);
+                $r = RawTelegramMsg::updateOrCreate($rawMsgData, $updateMsgData);
                 Log::info('Сообщение '. $message['id'] .' записали в БД.');
                 dump('Сообщение '. $this->chatId .':'. $message['id'] .' записали в БД. Данные: '. json_encode($updateMsgData));
             } catch (Exception $exception) {
@@ -208,5 +217,48 @@ trait MoneyExchangeTrait
         $this->chatSettings = ChatSettings::where('chat_id', $this->chatId)->first();
         $chatName = $this->chatSettings->chat_name;
         $this->parser = new $this->parsers[$chatName];
+    }
+
+    /**
+     * Проверяет наличие фото, скачивает на сервер и возвращает имя файла
+     * @param array $fileInfo
+     * @return null|string
+     */
+    protected function getChatAvatar(array $fileInfo): string|null
+    {
+        $imageName = '';
+
+        try {
+            $path = storage_path(TelegramChat::$baseAvatarPath . $this->chatId );
+            $mkDirResult = File::makeDirectory($path, 0777, true, true);
+            $imageName = $this->MadelineProto->downloadToDir($fileInfo, $path);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());;
+        }
+
+        return $imageName;
+    }
+
+    /**
+     * Обновить информацию о чате
+     * @param array $updData
+     * @return void
+     */
+    protected function updateChatInfo(array $updData): void
+    {
+        $comparedValues = [
+            'chat_id' => $this->chatId,
+        ];
+
+        try {
+            TelegramChat::updateOrCreate($comparedValues, $updData);
+            Log::info("Updated $this->chatId settings");
+        } catch (\danog\MadelineProto\RPCErrorException $e) {
+            Log::error($this->chatId .' updateChatInfo Error#1: '. $e->getMessage());
+//                dd($chatId .' Error#1: '. $e);
+        } catch (\Exception $e) {
+            Log::error($this->chatId .' updateChatInfo Error#2: '. $e->getMessage());
+//                dd($chatId .' Error#2: '. $e);
+        }
     }
 }

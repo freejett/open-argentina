@@ -4,7 +4,7 @@ namespace App\Parsers\Aparts\Telegram;
 
 use App\Helpers\StringFunctions;
 use App\Models\ApartmentsData;
-use App\Models\RawAppartmentsData;
+use App\Models\RawTelegramMsg;
 use App\Parsers\Aparts\ApartsInterface;
 use App\Traits\TelegramTrait;
 use Illuminate\Support\Facades\Log;
@@ -23,7 +23,7 @@ class BuenasHatas implements ApartsInterface
     public function parse(int $chatId): void
     {
         echo '<pre>';
-        $rawAparts = RawAppartmentsData::where('chat_id', $chatId)
+        $rawAparts = RawTelegramMsg::where('chat_id', $chatId)
 //            ->where('is_appartment', 1)
             ->orderBy('msg_id', 'desc')
             ->get();

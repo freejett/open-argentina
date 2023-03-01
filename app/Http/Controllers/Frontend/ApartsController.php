@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreApartmentsDataRequest;
 use App\Http\Requests\UpdateApartmentsDataRequest;
 use App\Models\ApartmentsData;
-use App\Models\RawAppartmentsData;
+use App\Models\RawTelegramMsg;
 use App\Models\Realtor;
 use App\Models\References\ReferenceRoomsNumber;
 use Illuminate\Http\Request;
@@ -62,7 +62,7 @@ class ApartsController extends FrontController
     {
         $apartment = ApartmentsData::find($id);
         $realtor = Realtor::find(1);
-        $rawApartments = RawAppartmentsData::where('chat_id', $apartment->chat_id)
+        $rawApartments = RawTelegramMsg::where('chat_id', $apartment->chat_id)
                             ->where('msg_id', $apartment->msg_id)
                             ->first();
 //        dd($apartment);

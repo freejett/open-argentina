@@ -3,7 +3,7 @@
 namespace App\Parsers\Aparts\Telegram;
 
 use App\Helpers\StringFunctions;
-use App\Models\RawAppartmentsData;
+use App\Models\RawTelegramMsg;
 use App\Models\ApartmentsData;
 use App\Parsers\Aparts\ApartsInterface;
 use App\Traits\TelegramTrait;
@@ -20,11 +20,11 @@ class ArgentinaHouse implements ApartsInterface
     public function parse(int $chatId): void
     {
         // определяем, какие из сообщений - объявления о квартире
-        RawAppartmentsData::select('chat_id', 'msg_id', 'is_appartment')
+        RawTelegramMsg::select('chat_id', 'msg_id', 'is_appartment')
             ->where('msg', 'like', 'Лот #%')
             ->update(['is_appartment' => 1]);
 
-        $rawAparts = RawAppartmentsData::where('chat_id', $chatId)
+        $rawAparts = RawTelegramMsg::where('chat_id', $chatId)
             ->where('is_appartment', 1)
             ->orderBy('msg_id', 'desc')
             ->get();
