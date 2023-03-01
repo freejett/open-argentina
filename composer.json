@@ -5,9 +5,10 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.0.2",
+        "php": "^8.1.14",
         "arrilot/laravel-widgets": "^3.13",
         "austintoddj/canvas": "^6.0",
+        "cknow/laravel-money": "^7.0",
         "danog/madelineproto": "^7.0",
         "geocoder-php/here-provider": "^0.7.0",
         "guzzlehttp/guzzle": "^7.2",
