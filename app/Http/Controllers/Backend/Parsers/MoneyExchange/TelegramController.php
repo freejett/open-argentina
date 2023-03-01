@@ -2,17 +2,9 @@
 
 namespace App\Http\Controllers\Backend\Parsers\MoneyExchange;
 
-use App\Helpers\StringFunctions;
 use App\Http\Controllers\Controller;
-use App\Models\ChatSettings;
-use App\Models\RawAppartmentsData;
-use App\Parsers\Exchange\MoneyExchangeInterface;
 use App\Traits\MoneyExchangeTrait;
-use danog\MadelineProto\API;
 use Illuminate\Support\Facades\Log;
-use danog\MadelineProto\Exception;
-use danog\MadelineProto\RPCErrorException;
-use danog\MadelineProto\Logger;
 
 /**
  * Парсер данных по обменным курсам из Телеграм каналов
@@ -26,6 +18,7 @@ class TelegramController extends Controller
     public function __construct()
     {
         $this->chatIds = config('parsers.exchange.telegram');
+        $this->telegramInit();
 
         if (!count($this->chatIds)) {
             Log::info('Не найдены чаты parsers.exchange.telegram для обновления параметров');
@@ -40,11 +33,26 @@ class TelegramController extends Controller
     public function index(): bool
     {
         foreach ($this->chatIds as $chatId => $chatName) {
-            $this->telegramInit($chatId);
+            $this->setChatId($chatId);
+//            dd($this->MadelineProto);
+            // список чатов
+//            $dialogsList = $this->MadelineProto->getFullDialogs();
+//            echo '<pre>'; print_r($dialogsList); exit();
+
+            // обновить настройки чатов
             $this->getChatMessages();
 
-//            $cashMsg = RawAppartmentsData::where('chat_id', $chatId)->orderBy('msg_id', 'desc')->get()->toArray();
-//            echo '<pre>'; print_r($cashMsg); //exit();
+            /**
+             * получить и сохранить аватарку чата
+             */
+            $photoInfo = $this->MadelineProto->getPropicInfo($chatId);
+            $this->getChatAvatar($photoInfo);
+
+            $updData = [
+                'chat_photo' => $photoInfo['name'] . $photoInfo['ext']
+            ];
+            $this->updateChatInfo($updData);
+
         }
         return true;
     }
@@ -56,7 +64,7 @@ class TelegramController extends Controller
     public function parse(): bool
     {
         foreach ($this->chatIds as $chatId => $chatName) {
-            $this->telegramInit($chatId);
+            $this->setChatId($chatId);
             $this->parseRawData();
         }
 
@@ -70,7 +78,7 @@ class TelegramController extends Controller
     public function updateChatsSettings(): bool
     {
         foreach ($this->chatIds as $chatId => $chatName) {
-            $this->telegramInit($chatId);
+            $this->setChatId($chatId);
             $this->updateChatSettings();
         }
 

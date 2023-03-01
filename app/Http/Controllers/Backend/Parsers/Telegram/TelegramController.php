@@ -2,19 +2,9 @@
 
 namespace App\Http\Controllers\Backend\Parsers\Telegram;
 
-use App\Helpers\StringFunctions;
 use App\Http\Controllers\Controller;
-use App\Models\ApartmentsData;
-use App\Models\ChatSettings;
-use App\Models\RawAppartmentsData;
 use App\Traits\TelegramTrait;
-use danog\MadelineProto\API;
 use Illuminate\Support\Facades\Log;
-use danog\MadelineProto\Exception;
-use danog\MadelineProto\RPCErrorException;
-use danog\MadelineProto\Logger;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
 
 
 /**
@@ -26,25 +16,31 @@ class TelegramController extends Controller
 {
     use TelegramTrait;
 
+    protected array $chatIds;
+
+    public function __construct()
+    {
+        $this->chatIds = config('parsers.exchange.telegram');
+        $this->telegramInit();
+
+        if (!count($this->chatIds)) {
+            Log::info('Не найдены чаты parsers.exchange.telegram для обновления параметров');
+            return true;
+        }
+    }
+
     /**
      * Получаем сообщения из телеграм канала и записываем в БД
      * @return bool
      */
     public function index(): bool
     {
-        $chatIds = config('parsers.aparts.telegram');
+        foreach ($this->chatIds as $chatId => $chatName) {
+            $this->setChatId($chatId);
+            $this->getChatMessages();
 
-        if (!count($chatIds)) {
-            Log::info('Не найдены чаты parsers.aparts.telegram для обновления параметров');
-            return true;
-        }
-
-        foreach ($chatIds as $chatId => $chatName) {
-//            $this->telegramInit($chatId);
-//            $this->getChatMessages();
-
-            $cashMsg = RawAppartmentsData::where('chat_id', $chatId)->orderBy('msg_id', 'desc')->get()->toArray();
-            echo '<pre>'; print_r($cashMsg); exit();
+//            $cashMsg = RawTelegramMsg::where('chat_id', $chatId)->orderBy('msg_id', 'desc')->get()->toArray();
+//            echo '<pre>'; print_r($cashMsg); exit();
         }
 
 //        $dialogsList = $this->MadelineProto->getFullDialogs();
@@ -71,15 +67,8 @@ class TelegramController extends Controller
      */
     public function parse(): bool
     {
-        $chatIds = config('parsers.aparts.telegram');
-
-        if (!count($chatIds)) {
-            Log::info('Не найдены чаты parsers.aparts.telegram для обновления параметров');
-            return true;
-        }
-
-        foreach ($chatIds as $chatId => $chatName) {
-            $this->telegramInit($chatId);
+        foreach ($this->chatIds as $chatId => $chatName) {
+            $this->setChatId($chatId);
             $this->parseRawData();
         }
 
@@ -92,15 +81,8 @@ class TelegramController extends Controller
      */
     public function updateChatsSettings(): bool
     {
-        $chatIds = config('parsers.aparts.telegram');
-
-        if (!count($chatIds)) {
-            Log::info('Не найдены чаты parsers.aparts.telegram для обновления параметров');
-            return true;
-        }
-
-        foreach ($chatIds as $chatId => $chatName) {
-            $this->telegramInit($chatId);
+        foreach ($this->chatIds as $chatId => $chatName) {
+            $this->setChatId($chatId);
             $this->updateChatSettings();
         }
 

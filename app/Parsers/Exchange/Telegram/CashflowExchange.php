@@ -3,7 +3,7 @@
 namespace App\Parsers\Exchange\Telegram;
 
 use App\Helpers\StringFunctions;
-use App\Models\RawAppartmentsData;
+use App\Models\RawTelegramMsg;
 use App\Models\References\ReferenceExchangeDirections;
 use App\Parsers\Exchange\MoneyExchangeInterface;
 use App\Traits\MoneyExchangeTrait;
@@ -21,7 +21,7 @@ class CashflowExchange implements MoneyExchangeInterface
      */
     public function parse(int $chatId): void
     {
-        $rawMsgs = RawAppartmentsData::where('chat_id', $chatId)
+        $rawMsgs = RawTelegramMsg::where('chat_id', $chatId)
             ->orderBy('msg_id', 'desc')
             ->limit(10)
             ->get();
@@ -55,7 +55,7 @@ class CashflowExchange implements MoneyExchangeInterface
                 $rateExchangeData = [
                     'date' => $date,
                     'rate' => $rate,
-                    'msg' => $rawMsg->msg,
+//                    'msg' => $rawMsg->msg,
                 ];
 
                 $r = MoneyExchangeModel::updateOrCreate($rateExchangeCheckData, $rateExchangeData);

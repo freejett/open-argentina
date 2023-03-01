@@ -39,8 +39,9 @@ class ParseData extends Command
             return true;
         }
 
+        $this->telegramInit();
         foreach ($chatIds as $chatId => $chatName) {
-            $this->telegramInit($chatId);
+            $this->setChatId($chatId);
             $this->parseRawData();
         }
         return Command::SUCCESS;
