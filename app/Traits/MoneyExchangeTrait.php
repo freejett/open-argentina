@@ -45,6 +45,7 @@ trait MoneyExchangeTrait
         'ArgentinaUSD' => \App\Parsers\Exchange\Telegram\ArgentinaUSD::class,
         'WesternUrion' => \App\Parsers\Exchange\Telegram\WesternUrion::class,
         'argentina_crypto' => \App\Parsers\Exchange\Telegram\ArgentinaCrypto::class,
+        'ArsExchange' => \App\Parsers\Exchange\Telegram\ArsExchange::class,
     ];
 
     protected object $parser;
@@ -88,11 +89,13 @@ trait MoneyExchangeTrait
         }
 
         $messages_Messages = $this->MadelineProto->channels->getMessages(channel: $this->chatId, id: $msgIds);
+//        echo '<pre>'; print_r($messages_Messages); exit();
 
+        echo '<pre>';
         foreach ($messages_Messages['messages'] as $k => $message) {
             // если не сообщение или текст сообщения пустой
             //  || !$message['message']
-            if ($message['_'] != 'message' || $message['message'] == '') {
+            if ($message['_'] != 'message' || $message['message'] == '' || isset($message['from_id'])) {
                 continue;
             }
 
@@ -114,8 +117,8 @@ trait MoneyExchangeTrait
                 Log::error($exception->getMessage());;
             }
         }
-        $this->setNewCurrentMsgId();
 
+        $this->setNewCurrentMsgId();
         return true;
     }
 
