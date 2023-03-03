@@ -63,6 +63,9 @@
                                 </div>
                             </div>
                         </div>
+                            @if ($loop->index % 2 == 1)
+                                <div class="clearfix mb-5"></div>
+                            @endif
                         @endforeach
 
 {{--                        <div class="col-sm-6 feat-list">--}}
