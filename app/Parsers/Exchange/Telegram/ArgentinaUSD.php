@@ -80,8 +80,6 @@ class ArgentinaUSD implements MoneyExchangeInterface
      */
     public function getRate(array $msgStrings): array|null
     {
-//        $exchangeDirections = ReferenceExchangeDirections::all()->pluck('title', 'direction_id')->toArray();
-
         $rate = [];
         foreach ($msgStrings as $lineNumber => $msgLine) {
             if (!$msgLine) {

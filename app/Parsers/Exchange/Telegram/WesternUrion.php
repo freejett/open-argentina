@@ -4,7 +4,6 @@ namespace App\Parsers\Exchange\Telegram;
 
 use App\Helpers\StringFunctions;
 use App\Models\RawTelegramMsg;
-use App\Models\References\ReferenceExchangeDirections;
 use App\Parsers\Exchange\MoneyExchangeInterface;
 use App\Traits\MoneyExchangeTrait;
 use App\Models\MoneyExchange as MoneyExchangeModel;
