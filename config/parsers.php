@@ -26,6 +26,7 @@ return [
             -1001828314778 => 'ArgentinaUSD',
             -1001686458347 => 'WesternUrion',
             -1001756848597 => 'argentina_crypto',
+            -1001738900965 => 'ArsExchange',
         ],
     ],
 
