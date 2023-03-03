@@ -45,6 +45,8 @@ Route::name('parsers.')->group(function () {
         Route::any('/', 'index')->name('index');
         Route::get('/update_chats_settings', 'updateChatsSettings')->name('update_chats_settings.parser');
         Route::get('/parse', 'parse')->name('parse');
+        // тестовая функция
+        Route::get('/telegram', 'telegram')->name('telegram');
     });
 });
 
