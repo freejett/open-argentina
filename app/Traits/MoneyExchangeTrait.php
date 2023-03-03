@@ -43,6 +43,8 @@ trait MoneyExchangeTrait
     protected array $parsers = [
         'cashflowexchange' => \App\Parsers\Exchange\Telegram\CashflowExchange::class,
         'ArgentinaUSD' => \App\Parsers\Exchange\Telegram\ArgentinaUSD::class,
+        'WesternUrion' => \App\Parsers\Exchange\Telegram\WesternUrion::class,
+        'argentina_crypto' => \App\Parsers\Exchange\Telegram\ArgentinaCrypto::class,
     ];
 
     protected object $parser;
