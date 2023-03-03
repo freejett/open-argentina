@@ -7,6 +7,7 @@ use App\Models\ApartmentsData;
 use App\Models\MoneyExchange;
 use App\Models\References\ReferenceExchangeDirections;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class MainController extends FrontController
 {
@@ -25,7 +26,12 @@ class MainController extends FrontController
 //        view()->share('title',    $this->pageTitle);
     }
 
-    public function index(Request $request, ApartsFilter $filter)
+    /**
+     * @param Request $request
+     * @param ApartsFilter $filter
+     * @return View
+     */
+    public function index(Request $request, ApartsFilter $filter): View
     {
 //        $lastPosts = \Canvas\Models\Post::published()->limit(5)->get();
 //        dd($lastPosts);
