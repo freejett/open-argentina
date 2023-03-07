@@ -36,6 +36,9 @@ class ArsExchange implements MoneyExchangeInterface
             }
 
             $ratesArr = $this->getRate($rawMsgArr);
+            if (count($ratesArr) < 3) {
+                continue;
+            }
 
             foreach ($ratesArr as $exchangeDirectionId => $rate) {
                 if (!$rate) {
