@@ -19,11 +19,15 @@ class MainController extends FrontController
 
         $this->templateBase .= 'main.';
 //        $this->routeBase = 'template.';
-//        $this->pageTitle = 'Шаблоны оповещений';
+        $this->pageTitle = 'Открытая Аргентина. Поиск квартиры, недвижимости, обменных курсов, услул, новости Буэнос-Айреса, Аргентины и Латинской Америки';
+        $this->metaDescription = 'Открытая Аргентина. Поиск квартиры, недвижимости, обменных курсов, услул, новости Буэнос-Айреса, Аргентины и Латинской Америки';
+        $this->metaKeyword = 'Найти квартиру Буэнос-Айрес, обмен валюты Буэнос-Айрес, снять квартиру, новости Буэнос-Айрес';
 
         view()->share('templateBase', $this->templateBase);
 //        view()->share('routeBase',    $this->routeBase);
-//        view()->share('title',    $this->pageTitle);
+        view()->share('title',    $this->pageTitle);
+        view()->share('description',    $this->metaDescription);
+        view()->share('keyword',    $this->metaKeyword);
     }
 
     /**

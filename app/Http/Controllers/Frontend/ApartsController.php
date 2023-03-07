@@ -20,6 +20,13 @@ class ApartsController extends FrontController
         parent::__construct();
 
         $this->templateBase .= 'aparts.';
+        $this->pageTitle = 'Снять, найти квартиру в Буэнос-Айресе на длительный срок';
+        $this->metaDescription = 'Поиск квартиры Буэнос-Айрес';
+        $this->metaKeyword = 'Найти квартиру Буэнос-Айрес, снять квартиру Буэнос-Айрес';
+
+        view()->share('title', $this->pageTitle);
+        view()->share('description', $this->metaDescription);
+        view()->share('keyword', $this->metaKeyword);
         view()->share('templateBase', $this->templateBase);
     }
 

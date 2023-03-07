@@ -36,6 +36,14 @@ class ExchangeController extends FrontController
 
         $this->referenceExchangeDirections = ReferenceExchangeDirections::all()->keyBy('direction_id');
         $this->chatsNames = collect(config('parsers.exchange.telegram'));
+
+        $this->pageTitle = 'Обмен валюты в Буэнос-Айрес';
+        $this->metaDescription = 'Обменять рубли, usd, usdt, песо';
+        $this->metaKeyword = 'Обменять доллары на песо, usd на ars, usdt на ars, usdt на usd, euro на песо';
+
+        view()->share('title', $this->pageTitle);
+        view()->share('description', $this->metaDescription);
+        view()->share('keyword', $this->metaKeyword);
     }
 
     /**
