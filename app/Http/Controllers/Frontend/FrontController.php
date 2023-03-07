@@ -15,6 +15,24 @@ class FrontController extends Controller
     protected string $templateBase = 'frontend.';
 
     /**
+     * Тег Title
+     * @var string
+     */
+    protected string $pageTitle = '';
+
+    /**
+     * Тег Description
+     * @var string
+     */
+    protected string $metaDescription = '';
+
+    /**
+     * Тег Keyword
+     * @var string
+     */
+    protected string $metaKeyword = '';
+
+    /**
      * Current controller's method name for blade path
      * @var string
      */
@@ -23,6 +41,10 @@ class FrontController extends Controller
     public function __construct()
     {
         $this->currentMethod = Route::getCurrentRoute()->getActionMethod();
+
+        view()->share('title', $this->pageTitle);
+        view()->share('description', $this->metaDescription);
+        view()->share('keyword', $this->metaKeyword);
 
         view()->share([
             'menuItems' => $this->getMainMenu(),

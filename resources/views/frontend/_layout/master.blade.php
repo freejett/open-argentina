@@ -6,10 +6,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@yield('metaTitle')</title>
-    <meta name="description" content="GARO is a real-estate template">
-    <meta name="author" content="Kimarotec">
-    <meta name="keyword" content="html5, css, bootstrap, property, real-estate theme , bootstrap template">
+    <title>{{ $title }}</title>
+    <meta name="description" content="{{ $description }}">
+    <meta name="keyword" content="{{ $keyword }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
@@ -31,7 +30,7 @@
     <link rel="stylesheet" href="/assets/estate/assets/css/owl.carousel.css">
     <link rel="stylesheet" href="/assets/estate/assets/css/owl.theme.css">
     <link rel="stylesheet" href="/assets/estate/assets/css/owl.transitions.css">
-    <link rel="stylesheet" href="/assets/estate/assets/css/style.css?v=1">
+    <link rel="stylesheet" href="/assets/estate/assets/css/style.css?v=3">
     <link rel="stylesheet" href="/assets/estate/assets/css/responsive.css">
 </head>
 <!-- Google tag (gtag.js) -->
