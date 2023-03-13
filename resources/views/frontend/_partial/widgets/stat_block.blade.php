@@ -13,10 +13,10 @@
                     <div class="col-sm-3 col-xs-6">
                         <div class="count-item">
                             <div class="count-item-circle">
-                                <span class="pe-7s-users"></span>
+                                <span class="pe-7s-home"></span>
                             </div>
                             <div class="chart" data-percent="5000">
-                                <h2 class="percent" id="counter">0</h2>
+                                <h2 class="percent" id="_counter">547</h2>
                                 <h5>Квартир</h5>
                             </div>
                         </div>
@@ -24,33 +24,33 @@
                     <div class="col-sm-3 col-xs-6">
                         <div class="count-item">
                             <div class="count-item-circle">
-                                <span class="pe-7s-home"></span>
+                                <span class="pe-7s-users"></span>
                             </div>
                             <div class="chart" data-percent="12000">
-                                <h2 class="percent" id="counter1">0</h2>
-                                <h5>Properties in stock</h5>
+                                <h2 class="percent" id="_counter1">23</h2>
+                                <h5>Каналов в телеграм</h5>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-3 col-xs-6">
                         <div class="count-item">
                             <div class="count-item-circle">
-                                <span class="pe-7s-flag"></span>
+                                <span class="pe-7s-cash"></span>
                             </div>
                             <div class="chart" data-percent="120">
-                                <h2 class="percent" id="counter2">0</h2>
-                                <h5>City registered </h5>
+                                <h2 class="percent" id="_counter2">5</h2>
+                                <h5>Телеграм-каналов с курсами обмена валют</h5>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-3 col-xs-6">
                         <div class="count-item">
                             <div class="count-item-circle">
-                                <span class="pe-7s-graph2"></span>
+                                <span class="pe-7s-news-paper"></span>
                             </div>
                             <div class="chart" data-percent="5000">
-                                <h2 class="percent"  id="counter3">5000</h2>
-                                <h5>DEALER BRANCHES</h5>
+                                <h2 class="percent"  id="_counter3">18</h2>
+                                <h5>Новостных телеграм-каналов</h5>
                             </div>
                         </div>
 
