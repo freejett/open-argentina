@@ -72,9 +72,9 @@ class ApartmentsData extends Model
      * Scope для фильтра
      * @param Builder $builder
      * @param QueryFilter $filters
-     * @return Builder|object
+     * @return Builder
      */
-    public function scopeFilter(Builder $builder, QueryFilter $filters)
+    public function scopeFilter(Builder $builder, QueryFilter $filters): Builder
     {
         return $filters->apply($builder);
     }

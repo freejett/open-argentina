@@ -3,6 +3,7 @@
 namespace App\Traits\Geocoder;
 
 use App\Models\ApartmentsData;
+use Geocoder\Exception\Exception;
 use Geocoder\Query\GeocodeQuery;
 use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Client;
@@ -19,6 +20,7 @@ trait HereGeocoder {
     /**
      * Поиск координат на основе адреса
      * @return bool
+     * @throws Exception
      */
     public function searchCoordsByAddress(): bool
     {

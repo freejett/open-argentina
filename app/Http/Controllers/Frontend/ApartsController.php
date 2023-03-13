@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Filters\Frontend\ApartsFilter;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreApartmentsDataRequest;
-use App\Http\Requests\UpdateApartmentsDataRequest;
 use App\Models\ApartmentsData;
 use App\Models\RawTelegramMsg;
 use App\Models\Realtor;
 use App\Models\References\ReferenceRoomsNumber;
+use Canvas\Models\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 class ApartsController extends FrontController
 {
@@ -34,13 +31,12 @@ class ApartsController extends FrontController
      * Display a listing of the resource.
      * @param Request $request
      * @param ApartsFilter $filter
-     * @return array|false|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|mixed
+     * @return View
      */
-    public function index(Request $request, ApartsFilter $filter)
+    public function index(Request $request, ApartsFilter $filter): View
     {
         // квартиры для карты
         $apartments = ApartmentsData::filter($filter)
-            ->where('chat_id', -1001632649859)
             ->whereNull('status')
             ->orderBy('id', 'desc')
             ->paginate(30);
@@ -63,9 +59,9 @@ class ApartsController extends FrontController
     /**
      * Display the specified resource.
      * @param $id
-     * @return array|false|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|mixed
+     * @return View
      */
-    public function show($id)
+    public function show($id): View
     {
         $apartment = ApartmentsData::find($id);
         $realtor = Realtor::find(1);
