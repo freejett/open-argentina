@@ -64,16 +64,16 @@ class MoneyExchange extends Model
     {
          $result = collect(DB::select(DB::raw("SELECT `exchange_direction_id`, MAX(CAST(rate AS UNSIGNED)) as max
             FROM money_exchanges
-            WHERE date = NOW()
+            WHERE date = CAST( NOW() AS DATE)
                 AND
                 exchange_direction_id IN (1, 3, 5)
             GROUP BY `exchange_direction_id`"))
         );
 
          if (!count($result)) {
-             collect(DB::select(DB::raw("SELECT `exchange_direction_id`, MAX(CAST(rate AS UNSIGNED)) as max
+             $result = collect(DB::select(DB::raw("SELECT `exchange_direction_id`, MAX(CAST(rate AS UNSIGNED)) as max
             FROM money_exchanges
-            WHERE date = NOW() - INTERVAL 1 DAY
+            WHERE date = CAST( NOW() - INTERVAL 1 DAY AS DATE)
                 AND
                 exchange_direction_id IN (1, 3, 5)
             GROUP BY `exchange_direction_id`"))
