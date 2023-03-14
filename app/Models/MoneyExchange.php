@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use DB;
 
 class MoneyExchange extends Model
 {
@@ -52,6 +53,34 @@ class MoneyExchange extends Model
         }
 
         return $exchange;
+    }
+
+    /**
+     *
+     * @param array $exchangeDirectionsId
+     * @return Collection
+     */
+    public static function getMostFavorableRate(array $exchangeDirectionsId): Collection
+    {
+         $result = collect(DB::select(DB::raw("SELECT `exchange_direction_id`, MAX(CAST(rate AS UNSIGNED)) as max
+            FROM money_exchanges
+            WHERE date = NOW()
+                AND
+                exchange_direction_id IN (1, 3, 5)
+            GROUP BY `exchange_direction_id`"))
+        );
+
+         if (!count($result)) {
+             collect(DB::select(DB::raw("SELECT `exchange_direction_id`, MAX(CAST(rate AS UNSIGNED)) as max
+            FROM money_exchanges
+            WHERE date = NOW() - INTERVAL 1 DAY
+                AND
+                exchange_direction_id IN (1, 3, 5)
+            GROUP BY `exchange_direction_id`"))
+             );
+         }
+
+        return $result;
     }
 
     /**

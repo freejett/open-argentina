@@ -22,7 +22,7 @@ class ExchangeRate extends AbstractWidget
     public function run()
     {
         $exchangeDirectionsId = [1,3,5];
-        $exchange = MoneyExchange::getTodayExchanges($exchangeDirectionsId);
+        $exchange = MoneyExchange::getMostFavorableRate($exchangeDirectionsId)->keyBy('exchange_direction_id');
         $referenceExchangeDirections = ReferenceExchangeDirections::all()->keyBy('direction_id');
 
         return view('widgets.exchange_rate', [
