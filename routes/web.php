@@ -3,14 +3,15 @@
 use Illuminate\Support\Facades\Route;
 
 //use App\Http\Controllers\Controller;
+use App\Http\Controllers\Backend\Geo\HereMapController;
+use App\Http\Controllers\Backend\Parsers\MoneyExchange\TelegramController as MoneyExchangeController;
+use App\Http\Controllers\Backend\Parsers\Telegram\TelegramController;
+use App\Http\Controllers\Backend\StageController;
 use App\Http\Controllers\Frontend\ApartsController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ExchangeController;
 use App\Http\Controllers\Frontend\MainController;
 use App\Http\Controllers\Frontend\PagesController;
-use App\Http\Controllers\Backend\Geo\HereMapController;
-use App\Http\Controllers\Backend\Parsers\MoneyExchange\TelegramController as MoneyExchangeController;
-use App\Http\Controllers\Backend\Parsers\Telegram\TelegramController;
 
 /*
 |--------------------------------------------------------------------------
@@ -119,4 +120,17 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    /**
+     * Админка
+     */
+    Route::name('backend.')->group(function () {
+        /**
+         * Дашборд админки
+         */
+        Route::controller(StageController::class)->prefix('stage')->name('stage.')->group(function () {
+            // список последних записей в блоге
+            Route::get('/', 'index')->name('index');
+        });
+    });
 });
