@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('raw_telegram_msgs', function (Blueprint $table) {
-            $table->bigInteger('chat_id')->index();
-            $table->bigInteger('msg_id')->index();
-            $table->text('msg')->nullable();
-            $table->char('is_appartment')->nullable();
-            $table->timestamps();
+        Schema::table('raw_telegram_msgs', function (Blueprint $table) {
+            $table->integer('forwards')->after('msg_id')->nullable();
+            $table->integer('views')->after('msg_id')->nullable();
+            $table->integer('date')->after('msg_id')->nullable();
         });
     }
 
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('raw_telegram_msgs');
+        //
     }
 };
