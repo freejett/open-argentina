@@ -1,5 +1,5 @@
 @extends('backend._layout.master')
 
 @section('content')
-    stage dashboard
+    Здесь будут виджеты
 @endsection
