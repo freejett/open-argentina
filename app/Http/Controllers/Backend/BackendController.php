@@ -20,6 +20,20 @@ class BackendController extends Controller
      */
     protected string $currentMethod = '';
 
+    /**
+     * ID типа объекта (недвижимость, новости, валюты)
+     * @var int
+     */
+    protected int $telegramTypeId;
+
+    /**
+     *  Тип объекта (недвижимость, новости, валюты)
+     * @var string
+     */
+    private string $telegramTypeName;
+
+
+
     public function __construct()
     {
         $this->currentMethod = Route::getCurrentRoute()->getActionMethod();

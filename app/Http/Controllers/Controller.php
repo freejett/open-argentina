@@ -12,4 +12,10 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /**
+     * Базовый путь до аватаров телеграм
+     * @var string
+     */
+    protected string $avatarPath = 'storage/telegram/chats/avatars/';
+
 }

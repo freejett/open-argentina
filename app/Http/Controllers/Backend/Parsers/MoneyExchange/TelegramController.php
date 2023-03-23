@@ -17,6 +17,8 @@ class TelegramController extends Controller
 
     protected array $chatIds;
 
+    protected array $dialogsList;
+
     public function __construct()
     {
         //*
@@ -95,16 +97,46 @@ class TelegramController extends Controller
     // [pinned] => 1
     public function telegram()
     {
-//        $dialogsList = $this->MadelineProto->getFullDialogs();
-//        echo '<pre>'; print_r($dialogsList); exit();
+//        $this->chatId = -1001531614658;
+//        $msgIds = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168];
+        echo '<pre>';
+        $this->dialogsList = $this->MadelineProto->getFullDialogs();
+        $this->chatIds = $this->getChatsId();
+        $this->getDialogsInfo();
+        exit();
 
-        $t = $this->MadelineProto->getFullInfo(-1001738900965);
-        echo '<hr><pre>'; print_r($t);
+//        $t = $this->MadelineProto->getFullInfo(-1001738900965);
+//        $messages = $this->MadelineProto->channels->getMessages(channel: $this->chatId, id: $msgIds);
+//        echo '<hr><pre>'; print_r($messages);
+//        exit();
 
 //        $t = $this->MadelineProto->getFullInfo(-1001686458347);
 //        echo '<hr><pre>'; print_r($t);
 //
 //        $t = $this->MadelineProto->getFullInfo(-1001756848597);
 //        echo '<hr><pre>'; print_r($t);
+    }
+
+    private function getChatsId()
+    {
+        $result = [];
+        foreach ($this->dialogsList as $key => $diaslog) {
+//            if (!isset($diaslog['folder_id'])) {
+            if ($diaslog['pinned'] != 1) {
+               continue;
+            }
+
+            $result[] = $key;
+        }
+
+        return $result;
+    }
+
+    private function getDialogsInfo()
+    {
+        foreach ($this->chatIds as $chatId) {
+            $chatFullInfo = $this->MadelineProto->getFullInfo($chatId);
+            print_r($chatFullInfo); echo '<hr>';
+        }
     }
 }

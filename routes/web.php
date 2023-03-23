@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ExchangeController;
 use App\Http\Controllers\Frontend\MainController;
 use App\Http\Controllers\Frontend\PagesController;
+use App\Http\Controllers\Backend\News\ParsersSettingsController as NewsParsersSettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,13 +125,21 @@ Route::middleware([
     /**
      * Админка
      */
-    Route::name('backend.')->group(function () {
+    Route::name('backend.')->prefix('stage')->group(function () {
         /**
          * Дашборд админки
          */
-        Route::controller(StageController::class)->prefix('stage')->name('stage.')->group(function () {
+        Route::controller(StageController::class)->name('stage.')->group(function () {
             // список последних записей в блоге
             Route::get('/', 'index')->name('index');
+        });
+
+        Route::prefix('news')->name('news.')->group(function () {
+
+            /**
+             * Настройка парсеров новостей
+             */
+            Route::resource('settings',NewsParsersSettingsController::class);
         });
     });
 });
