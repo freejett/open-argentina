@@ -148,4 +148,16 @@ class StringFunctions
 
         return $clear_string;
     }
+
+    /**
+     * Оставить первые N слов в тексте
+     * @param string $sentence
+     * @param int $count
+     * @return mixed
+     */
+    public static function getFirstWords(string $sentence, int $count = 10): mixed
+    {
+        preg_match("/(?:\w+(?:\W+|$)){0,$count}/", $sentence, $matches);
+        return $matches[0];
+    }
 }
