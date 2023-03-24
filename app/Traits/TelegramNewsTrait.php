@@ -2,7 +2,9 @@
 
 namespace App\Traits;
 
+use App\Helpers\StringFunctions;
 use App\Models\ChatSettings;
+use App\Models\News;
 use App\Models\RawTelegramMsg;
 use App\Models\Telegram\TelegramChat;
 use danog\MadelineProto\API;
@@ -199,11 +201,38 @@ trait TelegramNewsTrait {
      */
     public function parseRawData(): bool
     {
-        // определяем класс-обработчик для парсинга данных
-        $this->getParser();
+        $rawMsgs = RawTelegramMsg::where('chat_id', $this->chatId)
+            ->whereNull('status')
+            ->orderBy('date', 'asc')
+//            ->limit(1)
+            ->get();
 
-        // парсим данные в классе-парсере
-        $this->parser->parse($this->chatId);
+        foreach ($rawMsgs as $rawMsg) {
+            // разбиваем на строки для удобства обработки
+            $rawMsgArr = explode(PHP_EOL, $rawMsg->msg);
+
+            if (count($rawMsgArr) < 5) {
+                continue;
+            }
+
+            $newsCheckData = [
+                'chat_id' => $this->chatId,
+                'msg_id' => $rawMsg->msg_id,
+            ];
+
+            $newsData = [
+                'date' => $rawMsg->date,
+                'title' => $this->getTitle($rawMsgArr),
+                'body' => $rawMsg->msg,
+                'announcement' => StringFunctions::getFirstWords($rawMsg->msg),
+                'link' => '',
+                'status' => 0
+            ];
+//            dd($newsData);
+
+            $r = News::updateOrCreate($newsCheckData, $newsData);
+            Log::info('Новость '. $this->chatId .':'. $rawMsg->msg_id .' обработана.');
+        }
 
         return true;
     }
@@ -272,17 +301,6 @@ trait TelegramNewsTrait {
     }
 
     /**
-     * Определить класс-обработчик
-     * @return void
-     */
-    protected function getParser(): void
-    {
-        $this->chatSettings = ChatSettings::where('chat_id', $this->chatId)->first();
-        $chatName = $this->chatSettings->chat_name;
-        $this->parser = new $this->parsers[$chatName];
-    }
-
-    /**
      * Проверяет наличие фото, скачивает на сервер и возвращает имя файла
      * @param array $fileInfo
      * @return null|string
@@ -323,5 +341,20 @@ trait TelegramNewsTrait {
             Log::error($this->chatId .' updateChatInfo Error#2: '. $e->getMessage());
 //                dd($chatId .' Error#2: '. $e);
         }
+    }
+
+    /**
+     * Получить заголовок новости
+     * @param array $msgStrings
+     * @return string
+     */
+    protected function getTitle(array $msgStrings): string
+    {
+        $title = $msgStrings[0];
+        if (strlen($title) > 255) {
+            $title = substr($title, 0, 255);
+        }
+        $p = strrpos($title, ' ');
+        return substr($title, 0, $p);
     }
 }
