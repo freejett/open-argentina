@@ -7,7 +7,7 @@ use App\Models\ApartmentsData;
 use App\Models\RawTelegramMsg;
 use App\Models\Realtor;
 use App\Models\References\ReferenceRoomsNumber;
-use Canvas\Models\View;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class ApartsController extends FrontController

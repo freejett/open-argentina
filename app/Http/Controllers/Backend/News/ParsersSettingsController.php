@@ -87,14 +87,12 @@ class ParsersSettingsController extends BackendController
     /**
      * Изменение настроек канала
      * @param Request $request
-     * @param TelegramChat $telegramChat
      * @param int $id
      * @return RedirectResponse
      */
     public function update(Request $request, int $id): RedirectResponse
     {
         $telegramChat = TelegramChat::find($id);
-//        dd($request->all());
         $telegramChat->update($request->all());
 
         return redirect()->route('backend.news.settings.edit', $id)

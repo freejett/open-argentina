@@ -28,7 +28,7 @@
                         <td>
                             @if($telegramChat->chat_photo)
                                 <a href="{{ route('backend.news.settings.edit', $telegramChat->id) }}">
-                                    <img class="img-responsive img-circle telegram_avatar_min" style="max-width: 100px;" src="{{ asset($avatarPath . $telegramChat->chat_id .'/'. $telegramChat->chat_photo) }}" />
+                                    <img class="img-responsive img-circle telegram_avatar_min" style="max-width: 75px;" src="{{ asset($avatarPath . $telegramChat->chat_id .'/'. $telegramChat->chat_photo) }}" />
                                 </a>
                             @endif
                         </td>

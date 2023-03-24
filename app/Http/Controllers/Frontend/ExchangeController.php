@@ -24,7 +24,7 @@ class ExchangeController extends FrontController
      */
     public Collection $chatsNames;
 
-    public string $avatarPath = 'storage/telegram/chats/avatars/';
+//    public string $avatarPath = 'storage/telegram/chats/avatars/';
 
     public function __construct()
     {
@@ -56,7 +56,6 @@ class ExchangeController extends FrontController
         $exchanges = MoneyExchange::getExchanges();
         // информация по чатам с обменом валют
         $telegramChatsInfo = TelegramChat::where('type_id', 2)->get()->keyBy('chat_id');
-//        dd($exchanges);
 
         return view($this->templateBase . $this->currentMethod, [
             'referenceExchangeDirections' => $this->referenceExchangeDirections,
