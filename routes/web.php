@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\ExchangeController;
 use App\Http\Controllers\Frontend\MainController;
 use App\Http\Controllers\Frontend\PagesController;
 use App\Http\Controllers\Backend\News\ParsersSettingsController as NewsParsersSettingsController;
+use App\Http\Controllers\Backend\Parsers\News\TelegramController as NewsTelegramController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,15 @@ Route::name('parsers.')->group(function () {
      * Парсер апартаментов Телеграм
      */
     Route::controller(TelegramController::class)->prefix('telegram')->name('telegram.')->group(function () {
+        Route::any('/', 'index')->name('index');
+        Route::get('/update_chats_settings', 'updateChatsSettings')->name('update_chats_settings.parser');
+        Route::get('/parse', 'parse')->name('parse');
+    });
+
+    /**
+     * Парсер новостей телеграм
+     */
+    Route::controller(NewsTelegramController::class)->prefix('news_parser')->name('news.')->group(function () {
         Route::any('/', 'index')->name('index');
         Route::get('/update_chats_settings', 'updateChatsSettings')->name('update_chats_settings.parser');
         Route::get('/parse', 'parse')->name('parse');

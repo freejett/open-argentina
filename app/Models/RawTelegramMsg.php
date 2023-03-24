@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Builder;
  * RAW-данные по квартирам
  * @property integer chat_id
  * @property integer msg_id
+ * @property integer date
+ * @property integer views
+ * @property integer forwards
  * @property string msg
  * @property integer is_appartment
  * @property string photo
@@ -35,6 +38,9 @@ class RawTelegramMsg extends Model
         'id',
         'chat_id',
         'msg_id',
+        'date',
+        'views',
+        'forwards',
         'msg',
         'is_appartment',
         'photo',
