@@ -6,14 +6,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\Geo\HereMapController;
 use App\Http\Controllers\Backend\Parsers\MoneyExchange\TelegramController as MoneyExchangeController;
 use App\Http\Controllers\Backend\Parsers\Telegram\TelegramController;
+use App\Http\Controllers\Backend\News\ParsersSettingsController as NewsParsersSettingsController;
+use App\Http\Controllers\Backend\Parsers\News\TelegramController as NewsTelegramController;
+use App\Http\Controllers\Backend\News\NewsController as BackendNewsController;
 use App\Http\Controllers\Backend\StageController;
 use App\Http\Controllers\Frontend\ApartsController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ExchangeController;
 use App\Http\Controllers\Frontend\MainController;
 use App\Http\Controllers\Frontend\PagesController;
-use App\Http\Controllers\Backend\News\ParsersSettingsController as NewsParsersSettingsController;
-use App\Http\Controllers\Backend\Parsers\News\TelegramController as NewsTelegramController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -145,9 +147,13 @@ Route::middleware([
         });
 
         Route::prefix('news')->name('news.')->group(function () {
+            /**
+             * Управление новостями
+             */
+            Route::resource('list',BackendNewsController::class);
 
             /**
-             * Настройка парсеров новостей
+             * Настройка новостных ТК
              */
             Route::resource('settings',NewsParsersSettingsController::class);
         });
