@@ -222,6 +222,8 @@ trait TelegramNewsTrait {
 
             $newsData = [
                 'date' => $rawMsg->date,
+                'views' => $rawMsg->views,
+                'forwards' => $rawMsg->forwards,
                 'title' => $this->getTitle($rawMsgArr),
                 'body' => $rawMsg->msg,
                 'announcement' => $this->getAnnounce($rawMsg->msg),

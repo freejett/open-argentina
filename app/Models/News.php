@@ -46,7 +46,7 @@ class News extends Model
      *
      * @var array
      */
-    protected $fillable = ['chat_id','msg_id','date','title','body','announcement','cover','link','status'];
+    protected $fillable = ['chat_id','msg_id','date','title','views','forwards','body','announcement','cover','link','status'];
 
 
 

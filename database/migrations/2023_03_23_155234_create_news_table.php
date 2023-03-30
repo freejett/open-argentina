@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('chat_id');
             $table->bigInteger('msg_id');
-            $table->integer('date');
+            $table->integer('date')->nullable();
+            $table->integer('views')->nullable();
+            $table->integer('forwards')->nullable();
             $table->char('title', 255)->nullable();
             $table->text('body')->nullable();
             $table->text('announcement')->nullable();
