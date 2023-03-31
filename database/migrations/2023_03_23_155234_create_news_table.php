@@ -27,6 +27,12 @@ return new class extends Migration
             $table->char('link', 255)->nullable();
             $table->smallInteger('status', false, true)->nullable();
             $table->timestamps();
+
+            $table->foreign('chat_id', 'fk_news_telegram_chat_id')
+                ->references('chat_id')
+                ->on('telegram_chats')
+                ->onDelete('cascade');
+//            $table->foreign('chat_id')->references('chat_id')->on('telegram_chats');
         });
     }
 
