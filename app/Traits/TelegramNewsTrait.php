@@ -352,11 +352,12 @@ trait TelegramNewsTrait {
     protected function getTitle(array $msgStrings): string
     {
         $title = $msgStrings[0];
-        if (strlen($title) > 255) {
-            $title = substr($title, 0, 255);
+        if (mb_strlen($title) > 255) {
+            $title = mb_substr($title, 0, 255);
+            $p = strrpos($title, ' ');
+            return substr($title, 0, $p);
         }
-        $p = strrpos($title, ' ');
-        return substr($title, 0, $p);
+        return $title;
     }
 
     /**
@@ -366,7 +367,7 @@ trait TelegramNewsTrait {
      */
     protected function getAnnounce(string $msg): string
     {
-        $announce = mb_substr($msg, 0, 1000);
+        $announce = mb_substr($msg, 0, 500);
         $pos = mb_strrpos($announce, ' ');
         return mb_substr($announce, 0, $pos);
     }
