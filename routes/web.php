@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\ApartsController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ExchangeController;
 use App\Http\Controllers\Frontend\MainController;
+use App\Http\Controllers\Frontend\NewsController;
 use App\Http\Controllers\Frontend\PagesController;
 
 
@@ -103,6 +104,16 @@ Route::name('front.')->group(function () {
         Route::get('/', 'index')->name('index');
         // просмотр обменных курсов канала
         Route::get('/{channel_name}', 'show')->name('show');
+    });
+
+    /**
+     *  Новости
+     */
+    Route::controller(NewsController::class)->prefix('news')->name('news.')->group(function () {
+        // список последних записей в блоге
+        Route::get('/', 'index')->name('index');
+        // просмотр записи
+        Route::get('/{id}', 'show')->name('show');
     });
 
     /**
