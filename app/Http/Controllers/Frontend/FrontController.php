@@ -15,6 +15,11 @@ class FrontController extends Controller
     protected string $templateBase = 'frontend.';
 
     /**
+     * @var string
+     */
+    protected string $routePrefix = 'front';
+
+    /**
      * Тег Title
      * @var string
      */
@@ -42,23 +47,25 @@ class FrontController extends Controller
     {
         $this->currentMethod = Route::getCurrentRoute()->getActionMethod();
 
-        view()->share('title', $this->pageTitle);
-        view()->share('description', $this->metaDescription);
-        view()->share('keyword', $this->metaKeyword);
-
         view()->share([
+            'title' => $this->pageTitle,
+            'description' => $this->metaDescription,
+            'keyword' => $this->metaKeyword,
             'menuItems' => $this->getMainMenu(),
+            'avatarPath' => $this->avatarPath,
+            'tgLinkBase' => $this->tgLinkBase,
         ]);
     }
 
     protected function getMainMenu(): array
     {
         return [
-            route('front.main') => '<i class="fa fa-home" aria-hidden="true"></i>',
-            route('front.aparts.index') => 'Поиск квартиры',
-            route('front.exchange.index') => 'Обмен валюты',
+            route($this->routePrefix .'.main') => '<i class="fa fa-home" aria-hidden="true"></i>',
+            route($this->routePrefix .'.aparts.index') => 'Поиск квартиры',
+            route($this->routePrefix .'.exchange.index') => 'Обмен валюты',
             '2' => 'Каталог услуг',
-            route('front.blog.index') => 'Блог / Новости',
+            route($this->routePrefix .'.news.index') => 'Новости',
+            route($this->routePrefix .'.blog.index') => 'Блог',
             '4' => 'Контакты',
         ];
     }
