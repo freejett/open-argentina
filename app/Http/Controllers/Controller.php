@@ -18,4 +18,10 @@ class Controller extends BaseController
      */
     protected string $avatarPath = 'storage/telegram/chats/avatars/';
 
+    /**
+     * Основа сслки на ТГ-канал или пост/сообщение
+     * @var string
+     */
+    protected string $tgLinkBase = 'https://t.me/';
+
 }
