@@ -37,6 +37,7 @@ class ApartsController extends FrontController
     {
         // квартиры для карты
         $apartments = ApartmentsData::filter($filter)
+            ->where('chat_id', -1001632649859)
             ->whereNull('status')
             ->orderBy('id', 'desc')
             ->paginate(30);
