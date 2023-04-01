@@ -1511,7 +1511,7 @@ Asside widgets CSS
 
 .testimonial{
     position: relative;
-    margin-top: 50px;
+    margin-top: 10px;
 }
 .testimonial .item {
     padding-bottom: 67px;
@@ -1519,9 +1519,11 @@ Asside widgets CSS
 }
 .testimonial .item .client-face {
     position: absolute;
-    top: 112px;
-    right: 146px;
+    top: -34px;
+    right: 160px;
     text-align: center;
+    border: 5px #fff solid;
+    border-radius: 100px;
 }
 .client-face > img {
     border: 5px solid #fff;
@@ -1533,7 +1535,7 @@ Asside widgets CSS
 .client-text {
     border-radius: 2px;
     padding: 20px 30px;
-    margin: 15px;
+    margin: 30px 15px 15px 15px ;
     border: 1px solid #ECE9E9;
     background-color: #F5F5F5;
 }

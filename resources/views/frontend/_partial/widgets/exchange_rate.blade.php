@@ -4,7 +4,11 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
                 <!-- /.feature title -->
-                <h2 class="mb-5">Обменные курсы</h2>
+                <h2 class="mb-5">
+                    <a href="{{ route('front.exchange.index') }}">
+                        Обменные курсы
+                    </a>
+                </h2>
             </div>
         </div>
         <div class="row">
