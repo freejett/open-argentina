@@ -164,19 +164,19 @@ trait TelegramNewsTrait {
             }
 
             $this->chatId = $chatId;
-            $photoInfo = $this->MadelineProto->getPropicInfo($this->chatId);
-            $this->getChatAvatar($photoInfo);
-
-            $updData = [
-                'chat_photo' => $photoInfo['name'] . $photoInfo['ext']
-            ];
-            $this->updateChatInfo($updData);
+//            $photoInfo = $this->MadelineProto->getPropicInfo($this->chatId);
+//            $this->getChatAvatar($photoInfo);
+//
+//            $updData = [
+//                'chat_photo' => $photoInfo['name'] . $photoInfo['ext']
+//            ];
+//            $this->updateChatInfo($updData);
 
             $comparedValues = [
                 'chat_id' => $chatId,
             ];
             $updData = [
-                'current_msg_id' => 1,
+//                'current_msg_id' => 1,
                 'last_chat_msg_id' => $dialog['top_message'],
                 'chat_info' =>  json_encode($dialog),
             ];
