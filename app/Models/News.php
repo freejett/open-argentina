@@ -33,9 +33,16 @@ class News extends Model
      * 1 - не публикуем
      * 2 - публикуем анонс
      * 3 - публикуем полностью
+     * @var array
      */
+    static array $newStatus = [
+        0 => 'не обработана',
+        1 => 'не публикуем',
+        2 => 'публикуем анонс',
+        3 => 'публикуем полностью',
+    ];
 
-    static $rules = [
+    static array $rules = [
 		'chat_id' => 'required',
 		'msg_id' => 'required',
 		'date' => 'required',
