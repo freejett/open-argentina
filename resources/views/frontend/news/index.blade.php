@@ -17,7 +17,7 @@
     <div class="container padding-top-40">
         <div class="row">
             <div class="blog-asside-right col-md-3">
-                @include('frontend.aparts._partial.ads_block')
+{{--                @include('frontend.aparts._partial.ads_block')--}}
                 @include('frontend.aparts._partial.similar_apartments')
             </div>
 
