@@ -24,7 +24,7 @@ class TelegramController extends Controller
         $this->telegramTypeName = 'news';
         $this->telegramTypeId = array_search($this->telegramTypeName, config("parsers.telegram_channel_types"));
 
-        $this->chatIds = TelegramChat::where('type_id', 3)
+        $this->chatIds = TelegramChat::where('type_id', $this->telegramTypeId)
 //            ->limit(3)
             ->pluck('chat_id')
             ->toArray();
