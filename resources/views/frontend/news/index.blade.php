@@ -51,11 +51,15 @@
                             </p>
                         </div>
                     </div>
-                    {{--                    <div class="image wow fadeInLeft animated">--}}
-                    {{--                        <a href="{{ route('front.blog.show', $post->slug) }}">--}}
-                    {{--                            <img src="{{ $post->featured_image }}" class="img-responsive" alt="{{ $post->featured_image_caption }}">--}}
-                    {{--                        </a>--}}
-                    {{--                    </div>--}}
+
+                    @if($new->cover)
+                        <div class="image wow fadeInLeft animated">
+                            <a href="{{ $tgLinkBase . $new->channel->username .'/'. $new->msg_id }}">
+                                <img src="{{ asset('storage/aparts/'. $new->chat_id .'/'. $new->msg_id .'/'. $new->cover) }}" class="img-responsive" alt="{{ $new->title }}">
+                            </a>
+                        </div>
+                    @endif
+
                     <p class="intro">
                         {!! nl2br($new->announcement) !!}
                     </p>

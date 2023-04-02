@@ -204,7 +204,7 @@ trait TelegramNewsTrait {
         $rawMsgs = RawTelegramMsg::where('chat_id', $this->chatId)
             ->whereNull('status')
             ->orderBy('date', 'asc')
-//            ->limit(1)
+            ->limit(10)
             ->get();
 
         foreach ($rawMsgs as $rawMsg) {
@@ -228,7 +228,8 @@ trait TelegramNewsTrait {
                 'body' => $rawMsg->msg,
                 'announcement' => $this->getAnnounce($rawMsg->msg),
                 'link' => '',
-                'status' => 0
+//                'status' => 0,
+                'cover' => $rawMsg->photo,
             ];
 
             $r = News::updateOrCreate($newsCheckData, $newsData);

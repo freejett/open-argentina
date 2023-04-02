@@ -163,6 +163,10 @@ Route::middleware([
              */
             Route::resource('list',BackendNewsController::class);
 
+            Route::controller(BackendNewsController::class)->name('list.')->group(function () {
+                Route::patch('list/{id}/set_news_status/', 'setNewsStatus')->name('setNewsStatus');
+            });
+
             /**
              * Настройка новостных ТК
              */

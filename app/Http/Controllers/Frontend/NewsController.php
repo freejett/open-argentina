@@ -32,6 +32,7 @@ class NewsController extends FrontController
     public function index(Request $request): View
     {
         $news = News::with('channel')
+            ->whereIn('status', [2,3])
             ->orderBy('date', 'desc')
             ->paginate(20);
 
