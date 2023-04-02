@@ -155,9 +155,9 @@ class StringFunctions
      * @param int $count
      * @return mixed
      */
-    public static function getFirstWords(string $sentence, int $count = 10): mixed
+    public static function getFirstWords(string $sentence, int $count = 100): mixed
     {
-        preg_match("/(?:\w+(?:\W+|$)){0,$count}/", $sentence, $matches);
+        preg_match("/(?:\p{L}+(?:\W+|$)){0,$count}/u", $sentence, $matches);
         return $matches[0];
     }
 }

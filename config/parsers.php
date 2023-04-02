@@ -33,7 +33,7 @@ return [
     'aparts' => [
         'telegram' => [
             -1001632649859 => 'ArgentinaHouse',
-            -1001671940764 => 'buenas_hatas',
+//            -1001671940764 => 'buenas_hatas',
         ],
         'telegraph' => [],
         'instagram' => [],

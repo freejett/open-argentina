@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use Canvas\Models\Post;
+use Illuminate\View\View;
 
 class BlogController extends FrontController
 {
@@ -17,9 +18,9 @@ class BlogController extends FrontController
     /**
      * Список постов
      * @param Request $request
-     * @return array|false|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|mixed
+     * @return View
      */
-    public function index(Request $request): mixed
+    public function index(Request $request): View
     {
         $posts = Post::published()
                     ->orderBy('published_at', 'desc')
@@ -34,9 +35,9 @@ class BlogController extends FrontController
     /**
      * Просмотр поста
      * @param string $slug
-     * @return array|false|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|mixed
+     * @return View
      */
-    public function show(string $slug): mixed
+    public function show(string $slug): View
     {
         $post = Post::firstWhere('slug', $slug);;
 //        dd($post);

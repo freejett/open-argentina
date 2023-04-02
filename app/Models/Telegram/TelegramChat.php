@@ -2,8 +2,10 @@
 
 namespace App\Models\Telegram;
 
+use App\Models\News;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TelegramChat extends Model
 {
@@ -31,4 +33,13 @@ class TelegramChat extends Model
     ];
 
 //    public function
+
+    /**
+     * Новости
+     * @return HasMany
+     */
+    public function news(): HasMany
+    {
+        return $this->hasMany(News::class);
+    }
 }

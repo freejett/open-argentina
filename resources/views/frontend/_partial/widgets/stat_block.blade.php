@@ -49,7 +49,7 @@
                                 <span class="pe-7s-news-paper"></span>
                             </div>
                             <div class="chart" data-percent="5000">
-                                <h2 class="percent"  id="_counter3">18</h2>
+                                <h2 class="percent"  id="_counter3">16</h2>
                                 <h5>Новостных телеграм-каналов</h5>
                             </div>
                         </div>

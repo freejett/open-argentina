@@ -65,6 +65,8 @@
 
     @include('frontend._partial.widgets.exchange_rate')
 
+    @include('frontend._partial.widgets.last_news')
+
     <!-- Count area -->
     <div class="count-area">
         <div class="container">

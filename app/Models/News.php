@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Telegram\TelegramChat;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class News
@@ -31,9 +33,16 @@ class News extends Model
      * 1 - не публикуем
      * 2 - публикуем анонс
      * 3 - публикуем полностью
+     * @var array
      */
+    static array $newStatus = [
+        0 => 'не обработана',
+        1 => 'не публикуем',
+        2 => 'публикуем анонс',
+        3 => 'публикуем полностью',
+    ];
 
-    static $rules = [
+    static array $rules = [
 		'chat_id' => 'required',
 		'msg_id' => 'required',
 		'date' => 'required',
@@ -46,8 +55,14 @@ class News extends Model
      *
      * @var array
      */
-    protected $fillable = ['chat_id','msg_id','date','title','body','announcement','cover','link','status'];
+    protected $fillable = ['chat_id','msg_id','date','title','views','forwards','body','announcement','cover','link','status'];
 
-
-
+    /**
+     * Связанный ТГ канал
+     * @return BelongsTo
+     */
+    public function channel(): BelongsTo
+    {
+        return $this->belongsTo(TelegramChat::class, 'chat_id', 'chat_id');
+    }
 }

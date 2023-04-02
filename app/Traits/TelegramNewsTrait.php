@@ -164,19 +164,19 @@ trait TelegramNewsTrait {
             }
 
             $this->chatId = $chatId;
-            $photoInfo = $this->MadelineProto->getPropicInfo($this->chatId);
-            $this->getChatAvatar($photoInfo);
-
-            $updData = [
-                'chat_photo' => $photoInfo['name'] . $photoInfo['ext']
-            ];
-            $this->updateChatInfo($updData);
+//            $photoInfo = $this->MadelineProto->getPropicInfo($this->chatId);
+//            $this->getChatAvatar($photoInfo);
+//
+//            $updData = [
+//                'chat_photo' => $photoInfo['name'] . $photoInfo['ext']
+//            ];
+//            $this->updateChatInfo($updData);
 
             $comparedValues = [
                 'chat_id' => $chatId,
             ];
             $updData = [
-                'current_msg_id' => 1,
+//                'current_msg_id' => 1,
                 'last_chat_msg_id' => $dialog['top_message'],
                 'chat_info' =>  json_encode($dialog),
             ];
@@ -222,13 +222,14 @@ trait TelegramNewsTrait {
 
             $newsData = [
                 'date' => $rawMsg->date,
+                'views' => $rawMsg->views,
+                'forwards' => $rawMsg->forwards,
                 'title' => $this->getTitle($rawMsgArr),
                 'body' => $rawMsg->msg,
-                'announcement' => StringFunctions::getFirstWords($rawMsg->msg),
+                'announcement' => $this->getAnnounce($rawMsg->msg),
                 'link' => '',
                 'status' => 0
             ];
-//            dd($newsData);
 
             $r = News::updateOrCreate($newsCheckData, $newsData);
             Log::info('Новость '. $this->chatId .':'. $rawMsg->msg_id .' обработана.');
@@ -351,10 +352,23 @@ trait TelegramNewsTrait {
     protected function getTitle(array $msgStrings): string
     {
         $title = $msgStrings[0];
-        if (strlen($title) > 255) {
-            $title = substr($title, 0, 255);
+        if (mb_strlen($title) > 255) {
+            $title = mb_substr($title, 0, 255);
+            $p = strrpos($title, ' ');
+            return substr($title, 0, $p);
         }
-        $p = strrpos($title, ' ');
-        return substr($title, 0, $p);
+        return $title;
+    }
+
+    /**
+     * Вернуть анонс новости
+     * @param string $msg
+     * @return string
+     */
+    protected function getAnnounce(string $msg): string
+    {
+        $announce = mb_substr($msg, 0, 500);
+        $pos = mb_strrpos($announce, ' ');
+        return mb_substr($announce, 0, $pos);
     }
 }
