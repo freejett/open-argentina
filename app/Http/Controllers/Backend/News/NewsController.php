@@ -8,6 +8,7 @@ use App\Models\Telegram\TelegramChat;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class NewsController extends BackendController
@@ -33,9 +34,12 @@ class NewsController extends BackendController
     public function index(): View
     {
         $news = News::orderBy('date', 'desc')->paginate(50);
+        $newStatus = News::$newStatus;
+//        dd($newStatus);
 
         return view($this->templateBase . $this->currentMethod, [
             'news' => $news,
+            'newStatus' => $newStatus,
         ]);
     }
 
@@ -47,10 +51,48 @@ class NewsController extends BackendController
     public function edit(int $id): View
     {
         $news = News::find($id);
-//        dd($news);
 
         return view($this->templateBase . $this->currentMethod, [
             'news' => $news,
         ]);
+    }
+
+    /**
+     * Обновление новости
+     * @param Request $request
+     * @param News $news
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function update(Request $request, News $news, int $id): RedirectResponse
+    {
+        $news->find($id)->update($request->all());
+//        dd($news);
+
+        return redirect()->route('backend.news.list.edit', $id)
+            ->with('success', 'News updated successfully');
+    }
+
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return void
+     */
+    public function setNewsStatus(Request $request, News $news, int $id)
+    {
+        $news->find($id)->update($request->all());
+    }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function destroy($id)
+    {
+        $news = News::find($id)->delete();
+
+        return redirect()->route('news.index')
+            ->with('success', 'News deleted successfully');
     }
 }

@@ -1,7 +1,7 @@
 @extends('backend._layout.master')
 
 @section('content')
-{{--<a href="{{ route('backend.news.settings.create') }}" class="float-end btn btn-primary">{{ __('Добавить канал') }}</a>--}}
+<a href="{{ route('backend.news.settings.create') }}" class="float-end btn btn-primary">{{ __('Добавить канал') }}</a>
 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Новости /</span> Настройки</h4>
 
 <div class="card">
@@ -15,6 +15,8 @@
                 <thead>
                     <tr>
                         <th></th>
+                        <th>Статус</th>
+                        <th>Обложка</th>
                         <th>Название</th>
                         <th>Дата</th>
                         <th>Контакт</th>
@@ -27,6 +29,14 @@
                     <tr>
                         <td>
                             {{ $new->id }}
+                        </td>
+                        <td>
+                            {{ Form::select('status', $newStatus, $new->status, ['data-news-id' => $new->id, 'class' => 'news_status']) }}
+                        </td>
+                        <td>
+                            @if($new->cover)
+                                <img src="{{ asset('storage/aparts/'. $new->chat_id .'/'. $new->msg_id .'/'. $new->cover) }}" style="width: 80px;" class="img-responsive" alt="{{ $new->title }}">
+                            @endif
                         </td>
                         <td>
                             <a href="{{ route('backend.news.list.edit', $new->id) }}">
@@ -68,4 +78,10 @@
         @endif
     </div>
 </div>
+@endsection
+
+
+
+@section('script')
+    @include('backend.news._js')
 @endsection
