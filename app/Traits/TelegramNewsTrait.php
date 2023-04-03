@@ -204,14 +204,14 @@ trait TelegramNewsTrait {
         $rawMsgs = RawTelegramMsg::where('chat_id', $this->chatId)
             ->whereNull('status')
             ->orderBy('date', 'asc')
-            ->limit(10)
+            ->limit(100)
             ->get();
 
         foreach ($rawMsgs as $rawMsg) {
             // разбиваем на строки для удобства обработки
             $rawMsgArr = explode(PHP_EOL, $rawMsg->msg);
 
-            if (count($rawMsgArr) < 5) {
+            if (count($rawMsgArr) < 2) {
                 continue;
             }
 

@@ -126,7 +126,7 @@ trait TelegramTrait {
             try {
                 $r = RawTelegramMsg::updateOrCreate($rawMsgData, $updateMsgData);
                 Log::info('Сообщение '. $message['id'] .' записали в БД. Фото: '. $imageName);
-                dump('Сообщение '. $message['id'] .' записали в БД. Данные: '. json_encode($updateMsgData));
+//                dump('Сообщение '. $message['id'] .' записали в БД. Данные: '. json_encode($updateMsgData));
             } catch (Exception $exception) {
                 Log::error($exception->getMessage());;
             }
@@ -158,7 +158,7 @@ trait TelegramTrait {
                 'chat_id' => $chatId,
             ];
             $updData = [
-                'current_msg_id' => 1,
+//                'current_msg_id' => 1,
                 'last_chat_msg_id' => $dialog['top_message'],
                 'chat_info' =>  json_encode($dialog),
             ];
