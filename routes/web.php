@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 //use App\Http\Controllers\Controller;
+use App\Http\Controllers\Backend\Apartments\ApartmentsController as BackendApartsController;
 use App\Http\Controllers\Backend\Geo\HereMapController;
 use App\Http\Controllers\Backend\Parsers\MoneyExchange\TelegramController as MoneyExchangeController;
 use App\Http\Controllers\Backend\Parsers\Telegram\TelegramController;
@@ -155,6 +156,22 @@ Route::middleware([
         Route::controller(StageController::class)->name('stage.')->group(function () {
             // список последних записей в блоге
             Route::get('/', 'index')->name('index');
+        });
+
+        Route::prefix('aparts')->name('aparts.')->group(function () {
+            /**
+             * Управление квартирами
+             */
+            Route::resource('list',BackendApartsController::class);
+
+//            Route::controller(BackendApartsController::class)->name('list.')->group(function () {
+//                Route::patch('list/{id}/set_news_status/', 'setNewsStatus')->name('setNewsStatus');
+//            });
+
+            /**
+             * Настройка новостных ТК
+             */
+            Route::resource('settings',NewsParsersSettingsController::class);
         });
 
         Route::prefix('news')->name('news.')->group(function () {
