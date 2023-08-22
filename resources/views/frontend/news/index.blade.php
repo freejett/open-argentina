@@ -64,6 +64,7 @@
                         {!! nl2br($new->announcement) !!}
                     </p>
                     <p class="read-more">
+                        <a target="_blank" href="{{ route('front.news.show', $new->id) }}" class="btn btn-default btn-border">Читать &rarr;</a>
                         <a target="_blank" href="{{ $tgLinkBase . $new->channel->username .'/'. $new->msg_id }}" class="btn btn-default btn-border">Читать полностью &rarr;</a>
                     </p>
                 </section>

@@ -63,7 +63,7 @@ class FrontController extends Controller
             route($this->routePrefix .'.main') => '<i class="fa fa-home" aria-hidden="true"></i>',
             route($this->routePrefix .'.aparts.index') => 'Поиск квартиры',
             route($this->routePrefix .'.exchange.index') => 'Обмен валюты',
-            '2' => 'Каталог услуг',
+//            '2' => 'Каталог услуг',
             route($this->routePrefix .'.news.index') => 'Новости',
             route($this->routePrefix .'.blog.index') => 'Блог',
             '4' => 'Контакты',

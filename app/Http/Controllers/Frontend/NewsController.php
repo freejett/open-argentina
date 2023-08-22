@@ -14,7 +14,7 @@ class NewsController extends FrontController
         parent::__construct();
         $this->templateBase .= 'news.';
 
-        $this->pageTitle = 'Open Argentina. Новости Аргентины и Латинской Америки';
+        $this->pageTitle = 'Open Argentina. Новости Буэнос-Айреса Аргентины и Латинской Америки';
         $this->metaDescription = 'Open Argentina. Новости Аргентины и Латинской Америки';
         $this->metaKeyword = 'Новости Буэнос-Айрес, Новости Аргентина, Новости Чили, Новости Бразилия, Новости Латинская Америка';
 
@@ -32,9 +32,26 @@ class NewsController extends FrontController
     public function index(Request $request): View
     {
         $news = News::with('channel')
-            ->whereIn('status', [2,3])
+            ->active()
             ->orderBy('date', 'desc')
             ->paginate(20);
+
+        return view($this->templateBase . $this->currentMethod, [
+            'news' => $news,
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     * @param $id
+     * @return View
+     */
+    public function show($id): View
+    {
+        $news = News::with('channel')
+            ->active()
+            ->find($id);
+//        dd($news);
 
         return view($this->templateBase . $this->currentMethod, [
             'news' => $news,

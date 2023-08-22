@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use App\Models\Telegram\TelegramChat;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -64,5 +65,25 @@ class News extends Model
     public function channel(): BelongsTo
     {
         return $this->belongsTo(TelegramChat::class, 'chat_id', 'chat_id');
+    }
+
+    /**
+     * Только активные новости
+     * @param Builder $query
+     * @return void
+     */
+    public function scopeActive(Builder $query): void
+    {
+        $query->whereIn('status', [2,3]);
+    }
+
+    /**
+     * Только неактивные новости
+     * @param Builder $query
+     * @return void
+     */
+    public function scopeInactive(Builder $query): void
+    {
+        $query->whereIn('status', [0]);
     }
 }

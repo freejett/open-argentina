@@ -26,23 +26,23 @@ class Kernel extends ConsoleKernel
          * 73, 179, 181, 191, 193, 197, 199
          */
 
-        // парсер квартир
-        $schedule->command('telegram:update_chat_settings')->cron('23 * * * *');
-        $schedule->command('telegram:get_chat_messages')->cron('23 * * * *');
-        $schedule->command('telegram:parse')->cron('23 * * * *');
+        // парсинг новостей
+        $schedule->command('news:update_chat_settings')->cron('*/7 * * * *');
+        $schedule->command('news:get_chat_messages')->cron('*/7 * * * *');
+        $schedule->command('news:parse')->cron('*/7 * * * *');
 
         // пасинг курсов валют
-        $schedule->command('exchange:update_chat_settings')->cron('17 * * * *');
-        $schedule->command('exchange:get_chat_messages')->cron('17 * * * *');
-        $schedule->command('exchange:parse')->cron('17 * * * *');
+        $schedule->command('exchange:update_chat_settings')->cron('*/17 * * * *');
+        $schedule->command('exchange:get_chat_messages')->cron('*/17 * * * *');
+        $schedule->command('exchange:parse')->cron('*/17 * * * *');
 
         // парсинг координат квартиры
         $schedule->command('geocoder_here:search_coords')->everyThreeHours();
 
-        // парсинг новостей
-        $schedule->command('news:update_chat_settings')->cron('7 * * * *');
-        $schedule->command('news:get_chat_messages')->cron('7 * * * *');
-        $schedule->command('news:parse')->cron('7 * * * *');
+        // парсер квартир
+        $schedule->command('telegram:update_chat_settings')->cron('*/23 * * * *');
+        $schedule->command('telegram:get_chat_messages')->cron('*/23 * * * *');
+        $schedule->command('telegram:parse')->cron('*/23 * * * *');
         //*/
 
         /*

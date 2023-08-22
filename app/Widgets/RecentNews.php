@@ -21,6 +21,7 @@ class RecentNews extends AbstractWidget
     public function run()
     {
         $news = News::with('channel')
+            ->active()
             ->orderBy('date', 'desc')
             ->limit(9)
             ->get();

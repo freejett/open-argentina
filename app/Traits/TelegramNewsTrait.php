@@ -182,7 +182,7 @@ trait TelegramNewsTrait {
             ];
             try {
                 ChatSettings::updateOrCreate($comparedValues, $updData);
-                Log::info("Updated $chatId settings");
+                Log::info("Updated $chatId settings. top_message: ". $dialog['top_message']);
             } catch (\danog\MadelineProto\RPCErrorException $e) {
                 Log::error($chatId .' Error#1: '. $e->getMessage());
 //                dd($chatId .' Error#1: '. $e);
@@ -203,7 +203,7 @@ trait TelegramNewsTrait {
     {
         $rawMsgs = RawTelegramMsg::where('chat_id', $this->chatId)
             ->whereNull('status')
-            ->orderBy('date', 'asc')
+            ->orderBy('date', 'desc')
             ->limit(10)
             ->get();
 
@@ -211,7 +211,8 @@ trait TelegramNewsTrait {
             // разбиваем на строки для удобства обработки
             $rawMsgArr = explode(PHP_EOL, $rawMsg->msg);
 
-            if (count($rawMsgArr) < 5) {
+            if (count($rawMsgArr) < 1) {
+                Log::info('Новость '. $this->chatId .':'. $rawMsg->msg_id .' не похожа на новость.');
                 continue;
             }
 
