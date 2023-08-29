@@ -15,6 +15,7 @@ class ArgentinaHouse implements ApartsInterface
 
     /**
      * Парсер данных. Основная функция
+     * @param int $chatId
      * @return void
      */
     public function parse(int $chatId): void

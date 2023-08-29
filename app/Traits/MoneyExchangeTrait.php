@@ -52,7 +52,6 @@ trait MoneyExchangeTrait
 
     /**
      * Инициализация объекта для работы с API Telegram
-     * @param null $chatId
      * @return void
      */
     public function telegramInit(): void
