@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\News;
 
 use App\Http\Controllers\Backend\BackendController;
+use App\Http\Requests\Telegram\TelegramChatUppdateRequest;
 use App\Models\Telegram\TelegramChat;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -85,16 +86,28 @@ class ParsersSettingsController extends BackendController
 
     /**
      * Изменение настроек канала
-     * @param Request $request
+     * @param TelegramChatUppdateRequest $request
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, int $id): RedirectResponse
+    public function update(TelegramChatUppdateRequest $request, int $id): RedirectResponse
     {
         $telegramChat = TelegramChat::find($id);
         $telegramChat->update($request->all());
 
         return redirect()->route('backend.news.settings.edit', $id)
             ->with('success', 'TelegramChat updated successfully');
+    }
+
+    /**
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function destroy($id)
+    {
+        $news = TelegramChat::find($id)->delete();
+
+        return redirect()->route('backend.news.settings.index')
+            ->with('success', 'Telegram Chat deleted successfully');
     }
 }
