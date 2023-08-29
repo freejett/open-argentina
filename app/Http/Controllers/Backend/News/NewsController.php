@@ -75,6 +75,7 @@ class NewsController extends BackendController
 
     /**
      * @param Request $request
+     * @param News $news
      * @param int $id
      * @return void
      */

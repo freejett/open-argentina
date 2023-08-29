@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Backend\News;
+namespace App\Http\Controllers\Backend\Apartments;
 
 use App\Http\Controllers\Backend\BackendController;
-use App\Http\Requests\Telegram\TelegramChatUppdateRequest;
 use App\Models\Telegram\TelegramChat;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -12,15 +11,13 @@ use Illuminate\Http\Request;
 
 class ParsersSettingsController extends BackendController
 {
+    protected string $telegramTypeName = 'aparts';
+    protected string $routePath = 'aparts.settings';
 
     public function __construct()
     {
         parent::__construct();
-
-        $this->telegramTypeName = 'news';
-        $this->routePath = 'news.settings';
         $this->telegramTypeId = array_search($this->telegramTypeName, config("parsers.telegram_channel_types"));
-//        $this->telegramTypeId = 2;
         $this->templateBase .= $this->routePath .'.';
 
         view()->share('templateBase', $this->templateBase);
@@ -86,28 +83,16 @@ class ParsersSettingsController extends BackendController
 
     /**
      * Изменение настроек канала
-     * @param TelegramChatUppdateRequest $request
+     * @param Request $request
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(TelegramChatUppdateRequest $request, int $id): RedirectResponse
+    public function update(Request $request, int $id): RedirectResponse
     {
         $telegramChat = TelegramChat::find($id);
         $telegramChat->update($request->all());
 
         return redirect()->route('backend.news.settings.edit', $id)
             ->with('success', 'TelegramChat updated successfully');
-    }
-
-    /**
-     * @param $id
-     * @return RedirectResponse
-     */
-    public function destroy($id)
-    {
-        $news = TelegramChat::find($id)->delete();
-
-        return redirect()->route('backend.news.settings.index')
-            ->with('success', 'Telegram Chat deleted successfully');
     }
 }

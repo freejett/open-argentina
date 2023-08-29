@@ -30,17 +30,21 @@
 
                 <div class="col-md-12 clear">
                     <div id="list-type" class="proerty-th m-4">
-                        {{ $apartments->onEachSide(2)->links() }}
+                        @if (count($apartments))
+                            {{ $apartments->onEachSide(2)->links() }}
 
-                        @foreach($apartments as $i => $apartment)
-                            @include('frontend.aparts._partial.apart_preview_card')
+                            @foreach($apartments as $i => $apartment)
+                                @include('frontend.aparts._partial.apart_preview_card')
 
-                            @if ($i % 3 == 2)
-                                <div class="clear"></div>
-                            @endif
-                        @endforeach
+                                @if ($i % 3 == 2)
+                                    <div class="clear"></div>
+                                @endif
+                            @endforeach
 
-                        {!! $apartments->onEachSide(2)->links() !!}
+                            {!! $apartments->onEachSide(2)->links() !!}
+                        @else
+                            <p>{{ __('aparts.not_found') }}</p>
+                        @endif
                     </div>
                 </div>
             </div>
